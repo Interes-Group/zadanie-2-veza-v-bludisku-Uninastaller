@@ -3,7 +3,6 @@ package sk.stuba.fei.uim.oop;
 public class Player {
     private int xPosition;
     private int yPosition;
-    private int mWon;
 
     public Player(int xPosition, int yPosition) {
         this.xPosition = xPosition;
@@ -25,4 +24,8 @@ public class Player {
         xPosition += index;
     }
 
+    public void setPosition(int xPosition, int yPosition) {
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+    }
 }
