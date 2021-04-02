@@ -85,6 +85,7 @@ public class MyFrame extends JFrame implements ActionListener{
         } else if (e.getSource() == right) {
             canvas.processKeyEvent("right");
         }
+        canvas.listClear();
         this.requestFocus();
     }
 }
