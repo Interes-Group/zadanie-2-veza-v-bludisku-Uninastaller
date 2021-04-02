@@ -18,26 +18,9 @@ public class MyCanvas extends Canvas {
     boolean[] freeToGo = new boolean[4];
     Random rand = new Random();
     private List<Integer> list = new ArrayList<Integer>();
-    private int[][] maze = new int[15][15];
+    private int[][] maze;
 
-    private final int[][] baseMaze =
-            {       {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
-                    {3,0,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,9,9,9,9,9,9,9,9,9,9,9,9,9,3},
-                    {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
-
-            };
+    private final int[][] baseMaze;
 
     void mazeCreation(int x, int y, boolean newMaze){
         actX = x;
@@ -164,8 +147,18 @@ public class MyCanvas extends Canvas {
 
     }
 
-    public MyCanvas(MyFrame frame) {
+    public MyCanvas(MyFrame frame, int x, int y) {
 
+        baseMaze = new int[x][y];
+        for(int i = 0; i<x;i++){
+            for(int j =0; j<y;j++){
+                if((i==0)||(i==(x-1)))baseMaze[i][j]=3;
+                else if((j==0)||(j==(y-1)))baseMaze[i][j]=3;
+                else baseMaze[i][j]=9;
+            }
+
+        }
+        maze = new int[x][y];
         mazeCreation(1,1,true);
         this.frame = frame;
 

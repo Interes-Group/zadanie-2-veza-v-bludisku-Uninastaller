@@ -26,13 +26,13 @@ public class MyFrame extends JFrame implements ActionListener{
         label1.setText("   pocet vyhier    " + numberOfWins);
     }
 
-    public MyFrame(String label) {
+    public MyFrame(String label, int x, int y) {
         super(label);
         this.setSize(650, 700);
-        this.setResizable(false);
+//        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        canvas = new MyCanvas(this);
+        canvas = new MyCanvas(this,x,y);
         this.add(canvas);
         setVisible(true);
 
