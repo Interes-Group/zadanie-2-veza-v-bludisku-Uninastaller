@@ -46,7 +46,6 @@ public class MyMouseLogger  extends MouseAdapter {
                 mouseMove = true;
                 frame.canvas.showPosibleRoads();
                 frame.canvas.repaint();
-                frame.requestFocus();
             }
         }
         else {
@@ -56,6 +55,7 @@ public class MyMouseLogger  extends MouseAdapter {
             System.out.println(frame.canvas.player.getxPosition() + " " + frame.canvas.player.getyPosition());
 
         }
+        frame.requestFocus();
     }
 
 }

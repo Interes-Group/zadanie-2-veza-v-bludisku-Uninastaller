@@ -14,11 +14,16 @@ public class MyFrame extends JFrame implements ActionListener{
     JButton right;
     JButton restart;
     MyMouseLogger myMouseLogger = new MyMouseLogger(this);
-    private int numbersOfWins;
+    private int numberOfWins;
+
+    public void resetNumberOfWins(){
+        numberOfWins = 0;
+        label1.setText("   pocet vyhier    " + numberOfWins);
+    }
 
     public void won() {
-        numbersOfWins += 1;
-        label1.setText("   pocet vyhier    " + numbersOfWins);
+        numberOfWins += 1;
+        label1.setText("   pocet vyhier    " + numberOfWins);
     }
 
     public MyFrame(String label) {
@@ -38,7 +43,7 @@ public class MyFrame extends JFrame implements ActionListener{
         this.add(BorderLayout.PAGE_START, panel);
         restart = new JButton("Restart");
         up = new JButton("↑");
-        label1 = new JLabel("   pocet vyhier    " + numbersOfWins);
+        label1 = new JLabel("   pocet vyhier    " + numberOfWins);
         left = new JButton("←");
         down = new JButton("↓");
         right = new JButton("→");
@@ -70,7 +75,7 @@ public class MyFrame extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == restart) {
-            System.out.println("click");
+            canvas.restart(true);
         } else if (e.getSource() == up) {
             canvas.processKeyEvent("up");
         } else if (e.getSource() == down) {
