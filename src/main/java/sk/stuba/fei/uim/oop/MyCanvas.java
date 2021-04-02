@@ -186,7 +186,7 @@ public class MyCanvas extends Canvas {
     public void posibleMove(int x, int y){
         for(int i=0;i<(list.size()-1);i++){
             if(list.get(i)==x){
-                if(list.get(list.indexOf(x)+1)==y){
+                if(list.get(i+1)==y){
                     player.setPosition(x,y);
                     System.out.println("realne pohol si sa");
                     break;
