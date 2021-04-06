@@ -41,8 +41,9 @@ public class MyCanvas extends Canvas {
                 for(int i = 0; i< maze.length;i++){
                     for(int j = 0; j< maze[0].length;j++){
                         if(maze[i][j]==9){
+
+                            if(howManyPosibleRouts(i,j,0)==0)openForNextWay(i,j);
                             maze[i][j]=0;
-                            openForNextWay(i,j);
                             mazeCreation(i,j,false);
                         }
                     }
@@ -53,38 +54,86 @@ public class MyCanvas extends Canvas {
 
         }
     }
+
     void openForNextWay(int x, int y){
 
+        int[] upDownLeftRight = {0,0,0,0};
         int pocet = howManyPosibleRouts(x,y,1);
+        boolean[] freeToGo2 = freeToGo.clone();
 
-        int randNumber;
+        for(int i = 0; i<4; i++){
 
-        part_of_code:
-        while (true){
-            randNumber = rand.nextInt(4);
-
-            for(int i = 0; i<4; i++){
-                if((freeToGo[i])&&(randNumber==i)){
-                    if(i == 0){
-                        maze[x-1][y]=0;
-                        break part_of_code;
-                    }
-                    else if(i == 1){
-                        maze[x+1][y]=0;
-                        break part_of_code;
-                    }
-                    else if(i == 2){
-                        maze[x][y-1]=0;
-                        break part_of_code;
-                    }
-                    else {
-                        maze[x][y+1]=0;
-                        break part_of_code;
-                    }
+            if(freeToGo2[i]){
+                if(i == 0){
+                    upDownLeftRight[i] = howManyPosibleRouts(x-1,y,0);
+//                    maze[x-1][y]=0;
+//                    break;
+                }
+                else if(i == 1){
+                    upDownLeftRight[i] = howManyPosibleRouts(x+1,y,0);
+//                    maze[x+1][y]=0;
+//                    break;
+                }
+                else if(i == 2){
+                    upDownLeftRight[i] = howManyPosibleRouts(x,y-1,0);
+//                    maze[x][y-1]=0;
+//                    break;
+                }
+                else {
+                    upDownLeftRight[i] = howManyPosibleRouts(x,y+1,0);
+//                    maze[x][y+1]=0;
+//                    break;
                 }
             }
         }
+        upDownLeftRight = decideWhichBlockWillBeDeleted(upDownLeftRight);
+        for(int i = 0;i<4;i++){
+            if(upDownLeftRight[i]!=0){
+                switch (i){
+                    case 0:
+                        maze[x-1][y]=0;
+                        break;
+                    case 1:
+                        maze[x+1][y]=0;
+                        break;
+                    case 2:
+                        maze[x][y-1]=0;
+                        break;
+                    default:
+                        maze[x][y+1]=0;
+                        break;
+                }break;
+            }
+        }
 
+    }
+    int[] decideWhichBlockWillBeDeleted(int[] upDownLeftRight){
+
+        for(int i = 0;i<4;i++){
+            if(upDownLeftRight[i] == 0)upDownLeftRight[i]=10;
+        }
+
+        int minNumbersOfWays = 3;
+        int x = 5;
+        for(int i = 0; i<4; i++){
+
+            if(upDownLeftRight[i]<=minNumbersOfWays){
+                minNumbersOfWays = upDownLeftRight[i];
+                upDownLeftRight[i] = ++x;
+            }
+        }
+
+        for(int i = 0;i<4;i++){
+            if(upDownLeftRight[i] == 10)upDownLeftRight[i]=0;
+        }
+
+        for(int i = 0; i<4;i++){
+            if(upDownLeftRight[i]<x){
+                upDownLeftRight[i]=0;
+            }
+            else upDownLeftRight[i] = 1;
+        }
+        return upDownLeftRight;
     }
     void hladajCestu(){
 
