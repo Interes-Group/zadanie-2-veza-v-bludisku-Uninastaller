@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class MyKeyboardListener implements ActionListener {
 
-    MyFakeCanvas canvas;
+    private MyFakeCanvas canvas;
 
     public MyKeyboardListener(MyFakeCanvas canvas) {
         this.canvas = canvas;
@@ -16,16 +16,22 @@ public class MyKeyboardListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getActionCommand().equals("Restart")) {
-            canvas.restart(true);
-        } else if (e.getActionCommand().equals("↑")) {
-            canvas.processKeyEvent("up");
-        } else if (e.getActionCommand().equals("↓")) {
-            canvas.processKeyEvent("down");
-        } else if (e.getActionCommand().equals("←")) {
-            canvas.processKeyEvent("left");
-        } else if (e.getActionCommand().equals("→")) {
-            canvas.processKeyEvent("right");
+        switch (e.getActionCommand()) {
+            case "Restart":
+                canvas.restart(true);
+                break;
+            case "↑":
+                canvas.processKeyEvent("up");
+                break;
+            case "↓":
+                canvas.processKeyEvent("down");
+                break;
+            case "←":
+                canvas.processKeyEvent("left");
+                break;
+            case "→":
+                canvas.processKeyEvent("right");
+                break;
         }
         canvas.listClear();
     }

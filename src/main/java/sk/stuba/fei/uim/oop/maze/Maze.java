@@ -5,9 +5,9 @@ import java.util.Random;
 public class Maze {
 
     private int[][] maze;
-    private final int[][] baseMaze;
-    boolean[] freeToGo;
-    Random rand = new Random();
+    private int[][] baseMaze;
+    private boolean[] freeToGo;
+    private Random rand = new Random();
 
     public Maze(int x, int y, boolean[] freeToGo) {
         this.freeToGo = freeToGo;
@@ -33,18 +33,18 @@ public class Maze {
         maze[x][y] = 0;
     }
 
-    public int howManyPosibleRouts(int x, int y,int indexOfLookingFor){
+    public int howManyPossibleRouts(int x, int y, int indexOfLookingFor){
 
         for(int i =0; i < 4; i++){
             freeToGo[i] = false;
         }
 
-        int pocet = 0;
-        if(maze[x-1][y]==indexOfLookingFor){pocet++;freeToGo[0] = true;}
-        if(maze[x+1][y]==indexOfLookingFor){pocet++;freeToGo[1] = true;}
-        if(maze[x][y-1]==indexOfLookingFor){pocet++;freeToGo[2] = true;}
-        if(maze[x][y+1]==indexOfLookingFor){pocet++;freeToGo[3] = true;}
-        return pocet;
+        int count = 0;
+        if(maze[x-1][y]==indexOfLookingFor){count++;freeToGo[0] = true;}
+        if(maze[x+1][y]==indexOfLookingFor){count++;freeToGo[1] = true;}
+        if(maze[x][y-1]==indexOfLookingFor){count++;freeToGo[2] = true;}
+        if(maze[x][y+1]==indexOfLookingFor){count++;freeToGo[3] = true;}
+        return count;
 
     }
 
@@ -58,7 +58,7 @@ public class Maze {
 
     }
 
-    public int[] hladajCestu(int actX, int actY){
+    public int[] lookingForWay(int actX, int actY){
 
         int randNumber;
 
@@ -97,31 +97,23 @@ public class Maze {
     public void openForNextWay(int x, int y){
 
         int[] upDownLeftRight = {0,0,0,0};
-        howManyPosibleRouts(x,y,1);
+        howManyPossibleRouts(x,y,1);
         boolean[] freeToGo2 = freeToGo.clone();
 
         for(int i = 0; i<4; i++){
 
             if(freeToGo2[i]){
                 if(i == 0){
-                    upDownLeftRight[i] = howManyPosibleRouts(x-1,y,0);
-//                    maze[x-1][y]=0;
-//                    break;
+                    upDownLeftRight[i] = howManyPossibleRouts(x-1,y,0);
                 }
                 else if(i == 1){
-                    upDownLeftRight[i] = howManyPosibleRouts(x+1,y,0);
-//                    maze[x+1][y]=0;
-//                    break;
+                    upDownLeftRight[i] = howManyPossibleRouts(x+1,y,0);
                 }
                 else if(i == 2){
-                    upDownLeftRight[i] = howManyPosibleRouts(x,y-1,0);
-//                    maze[x][y-1]=0;
-//                    break;
+                    upDownLeftRight[i] = howManyPossibleRouts(x,y-1,0);
                 }
                 else {
-                    upDownLeftRight[i] = howManyPosibleRouts(x,y+1,0);
-//                    maze[x][y+1]=0;
-//                    break;
+                    upDownLeftRight[i] = howManyPossibleRouts(x,y+1,0);
                 }
             }
         }

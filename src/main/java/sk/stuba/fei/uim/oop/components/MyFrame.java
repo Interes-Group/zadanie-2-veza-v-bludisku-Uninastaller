@@ -1,6 +1,5 @@
 package sk.stuba.fei.uim.oop.components;
 
-import lombok.Getter;
 import sk.stuba.fei.uim.oop.listners.MyKeyboardListener;
 import sk.stuba.fei.uim.oop.listners.MyMouseLogger;
 
@@ -10,16 +9,19 @@ import java.awt.event.*;
 
 public class MyFrame extends JFrame{
 
-    @Getter
     private MyFakeCanvas canvas;
-    JLabel label1;
-    JButton up;
-    JButton down;
-    JButton left;
-    JButton right;
-    JButton restart;
-    MyMouseLogger myMouseLogger = new MyMouseLogger(this);
+    private JLabel label1;
+    private JButton up;
+    private JButton down;
+    private JButton left;
+    private JButton right;
+    private JButton restart;
+    private MyMouseLogger myMouseLogger = new MyMouseLogger(this);
     private int numberOfWins;
+
+    public MyFakeCanvas getCanvas() {
+        return canvas;
+    }
 
     public void resetNumberOfWins(){
         numberOfWins = 0;
@@ -31,15 +33,15 @@ public class MyFrame extends JFrame{
         label1.setText("   pocet vyhier    " + numberOfWins);
     }
 
-    public MyFrame(String label, int x, int y) {
+    public MyFrame(String label, int width, int length) {
         super(label);
         this.setSize(650, 700);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        canvas = new MyFakeCanvas(this,x,y);
+        canvas = new MyFakeCanvas(this,width,length);
         this.add(canvas);
-        setVisible(true);
+        this.setVisible(true);
         MyKeyboardListener keyboardListener = new MyKeyboardListener(canvas);
 
 
@@ -73,22 +75,5 @@ public class MyFrame extends JFrame{
 
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//
-//        if (e.getSource() == restart) {
-//            canvas.restart(true);
-//        } else if (e.getSource() == up) {
-//            canvas.processKeyEvent("up");
-//        } else if (e.getSource() == down) {
-//            canvas.processKeyEvent("down");
-//        } else if (e.getSource() == left) {
-//            canvas.processKeyEvent("left");
-//        } else if (e.getSource() == right) {
-//            canvas.processKeyEvent("right");
-//        }
-//        canvas.listClear();
-//        this.requestFocus();
-//    }
 }
 

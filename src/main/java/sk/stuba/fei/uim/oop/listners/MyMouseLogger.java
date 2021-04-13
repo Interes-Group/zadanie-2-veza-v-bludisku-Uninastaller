@@ -9,7 +9,6 @@ public class MyMouseLogger extends MouseAdapter {
 
     private int x;
     private int y;
-    private int pomocnaPremenna;
     private boolean mouseMove;
 
     private MyFrame frame;
@@ -26,12 +25,10 @@ public class MyMouseLogger extends MouseAdapter {
         y = e.getY();
 
         prepocetNaMojeSuradnice(x,y);
-
-//        if(mouseMove){
-//            if((x==frame.getCanvas().getHighlightedSquares()){
-//
-//            }
-//        }
+        System.out.println("pohyb.x:" + x + ", y:" + y);
+        if(mouseMove){
+           frame.getCanvas().Hover(x,y);
+        }
 
     }
 
@@ -45,28 +42,27 @@ public class MyMouseLogger extends MouseAdapter {
         y = e.getY();
 
        prepocetNaMojeSuradnice(x,y);
-
+       System.out.println("click.x:" + x + ", y:" + y);
         if(!mouseMove){
 
-            if((x==frame.getCanvas().getPlayer().getxPosition())&&(y==frame.getCanvas().getPlayer().getyPosition())){
+            if((x==frame.getCanvas().getPlayer().getXPosition())&&(y==frame.getCanvas().getPlayer().getYPosition())){
                 System.out.println("stlacil si na hraca");
                 mouseMove = true;
-                frame.getCanvas().showPosibleRoads();
+                frame.getCanvas().getPlayer().showPossibleRoads();
                 frame.getCanvas().repaint();
             }
         }
         else {
 
             mouseMove = false;
-            frame.getCanvas().posibleMove(x,y);
-            System.out.println(frame.getCanvas().getPlayer().getxPosition() + " " + frame.getCanvas().getPlayer().getyPosition());
+            frame.getCanvas().possibleMove(x,y);
+            System.out.println(frame.getCanvas().getPlayer().getXPosition() + " " + frame.getCanvas().getPlayer().getYPosition());
 
         }
-        frame.requestFocus();
     }
 
     void prepocetNaMojeSuradnice(int x, int y){
-        pomocnaPremenna = x%30;
+        int pomocnaPremenna = x % 30;
         x = x - pomocnaPremenna - 90;
         x /=30;
 
