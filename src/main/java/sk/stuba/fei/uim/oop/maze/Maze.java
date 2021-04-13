@@ -7,20 +7,26 @@ public class Maze {
     private int[][] maze;
     private int[][] baseMaze;
     private boolean[] freeToGo;
+    private int actX;
+    private int actY;
     private Random rand = new Random();
+    private int maze_width;
+    private int maze_length;
 
-    public Maze(int x, int y, boolean[] freeToGo) {
+    public Maze(int width, int length, boolean[] freeToGo) {
+        maze_width = width;
+        maze_length = length;
         this.freeToGo = freeToGo;
-        baseMaze = new int[x][y];
-        for(int i = 0; i<x;i++){
-            for(int j =0; j<y;j++){
-                if((i==0)||(i==(x-1)))baseMaze[i][j]=3;
-                else if((j==0)||(j==(y-1)))baseMaze[i][j]=3;
+        baseMaze = new int[width][length];
+        for(int i = 0; i<width;i++){
+            for(int j =0; j<length;j++){
+                if((i==0)||(i==(width-1)))baseMaze[i][j]=3;
+                else if((j==0)||(j==(length-1)))baseMaze[i][j]=3;
                 else baseMaze[i][j]=9;
             }
 
         }
-        maze = new int[x][y];
+        maze = new int[width][length];
     }
 
     public void newMaze(){
@@ -174,4 +180,37 @@ public class Maze {
     public int getSquare(int x, int y){
         return maze[x][y];
     }
+
+    public void mazeCreation(int x, int y, boolean newMaze) {
+        actX = x;
+        actY = y;
+        if (newMaze) {
+            newMaze();
+        }
+
+        int randDirection;
+        while (true) {
+
+            setPath(actX, actY);
+            randDirection = howManyPossibleRouts(actX, actY, 9);
+            if (randDirection == 0) {
+                if (newMaze) setSquare(actX, actY, 2);
+                for (int i = 0; i < maze_width; i++) {
+                    for (int j = 0; j < maze_length; j++) {
+                        if (getSquare(i, j) == 9) {
+
+                            if (howManyPossibleRouts(i, j, 0) == 0) openForNextWay(i, j);
+                            setSquare(i, j, 0);
+                            mazeCreation(i, j, false);
+                        }
+                    }
+                }
+                break;
+            }
+            int[] points = lookingForWay(actX, actY);
+            actX = points[0];
+            actY = points[1];
+        }
+    }
+
 }
