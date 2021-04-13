@@ -1,14 +1,20 @@
-package sk.stuba.fei.uim.oop;
+package sk.stuba.fei.uim.oop.components;
 
+import lombok.Getter;
+import sk.stuba.fei.uim.oop.maze.Maze;
+import sk.stuba.fei.uim.oop.maze.Player;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyCanvas extends Canvas {
+public class MyFakeCanvas extends JPanel {
 
     MyFrame frame;
-    Player player = new Player(1,1);
+    @Getter
+    private Player player = new Player(1, 1);
     int x;
     int y;
     int actX;
@@ -16,42 +22,47 @@ public class MyCanvas extends Canvas {
     int maze_width;
     int maze_length;
     boolean[] freeToGo = new boolean[4];
-//    Random rand = new Random();
+    //    Random rand = new Random();
     private List<Integer> highlightedSquares = new ArrayList<Integer>();
     Maze maze;
 //    private int[][] maze;
 //
 //    private final int[][] baseMaze;
 
-    void mazeCreation(int x, int y, boolean newMaze){
+
+    public List<Integer> getHighlightedSquares() {
+        return highlightedSquares;
+    }
+
+    void mazeCreation(int x, int y, boolean newMaze) {
         actX = x;
         actY = y;
-        if(newMaze) {
+        if (newMaze) {
             maze.newMaze();
         }
 
         int randDirection;
-        while(true) {
+        while (true) {
 
-            maze.setPath(actX,actY);
+            maze.setPath(actX, actY);
 //            maze[actX][actY] = 0;
-            randDirection = maze.howManyPosibleRouts(actX,actY,9);
-            if(randDirection==0){
-                if(newMaze)maze.setSquare(actX,actY,2);
-                for(int i = 0; i< maze_width;i++){
-                    for(int j = 0; j< maze_length; j++){
-                        if(maze.getSquare(i,j)==9){
+            randDirection = maze.howManyPosibleRouts(actX, actY, 9);
+            if (randDirection == 0) {
+                if (newMaze) maze.setSquare(actX, actY, 2);
+                for (int i = 0; i < maze_width; i++) {
+                    for (int j = 0; j < maze_length; j++) {
+                        if (maze.getSquare(i, j) == 9) {
 
-                            if(maze.howManyPosibleRouts(i,j,0)==0)maze.openForNextWay(i,j);
-                            maze.setSquare(i,j,0);
+                            if (maze.howManyPosibleRouts(i, j, 0) == 0) maze.openForNextWay(i, j);
+                            maze.setSquare(i, j, 0);
 //                            maze.maze[i][j]=0;
-                            mazeCreation(i,j,false);
+                            mazeCreation(i, j, false);
                         }
                     }
                 }
                 break;
             }
-            int[] points = maze.hladajCestu(actX,actY);
+            int[] points = maze.hladajCestu(actX, actY);
             actX = points[0];
             actY = points[1];
         }
@@ -198,7 +209,7 @@ public class MyCanvas extends Canvas {
 //
 //    }
 
-    public MyCanvas(MyFrame frame, int x, int y) {
+    public MyFakeCanvas(MyFrame frame, int x, int y) {
 
 //        baseMaze = new int[x][y];
 //        for(int i = 0; i<x;i++){
@@ -212,8 +223,8 @@ public class MyCanvas extends Canvas {
 //        maze = new int[x][y];
         this.maze_width = x;
         this.maze_length = y;
-        this.maze = new Maze(x,y, freeToGo);
-        mazeCreation(1,1,true);
+        this.maze = new Maze(x, y, freeToGo);
+        mazeCreation(1, 1, true);
         this.frame = frame;
 
     }
@@ -223,18 +234,18 @@ public class MyCanvas extends Canvas {
         y = player.getyPosition();
         x = player.getxPosition();
 
-        switch (move){
+        switch (move) {
             case "up":
-                canMoveVerticaly(x,y,-1);
+                canMoveVerticaly(x, y, -1);
                 break;
             case "down":
-                canMoveVerticaly(x,y,1);
+                canMoveVerticaly(x, y, 1);
                 break;
             case "left":
-                canMoveHorizontaly(x,y,-1);
+                canMoveHorizontaly(x, y, -1);
                 break;
             default:
-                canMoveHorizontaly(x,y,1);
+                canMoveHorizontaly(x, y, 1);
 
         }
         repaint();
@@ -247,34 +258,31 @@ public class MyCanvas extends Canvas {
         y = player.getyPosition();
         x = player.getxPosition();
 
-        if(e.getID() != KeyEvent.KEY_PRESSED){
+        if (e.getID() != KeyEvent.KEY_PRESSED) {
             return;
         }
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            canMoveHorizontaly(x,y,1);
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            canMoveHorizontaly(x,y,-1);
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_DOWN){
-            canMoveVerticaly(x,y,1);
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_UP){
-            canMoveVerticaly(x,y,-1);
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            canMoveHorizontaly(x, y, 1);
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            canMoveHorizontaly(x, y, -1);
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            canMoveVerticaly(x, y, 1);
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            canMoveVerticaly(x, y, -1);
         }
         repaint();
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-        g.translate(90,60);
+        g.translate(90, 60);
 
-        for(int row = 0; row < maze_width; row++){
-            for(int col = 0; col < maze_length; col++){
+        for (int row = 0; row < maze_width; row++) {
+            for (int col = 0; col < maze_length; col++) {
                 Color c;
-                switch (maze.getSquare(row,col)){
+                switch (maze.getSquare(row, col)) {
                     case 3:
                     case 1:
                         c = Color.BLACK;
@@ -295,91 +303,96 @@ public class MyCanvas extends Canvas {
             }
         }
         g.setColor(Color.ORANGE);
-        g.fillOval(player.getyPosition()*30+1, player.getxPosition()*30+1,28,28);
+        g.fillOval(player.getyPosition() * 30 + 1, player.getxPosition() * 30 + 1, 28, 28);
 
-        for(int i = 0; i < highlightedSquares.size(); i+=2){
+        for (int i = 0; i < highlightedSquares.size(); i += 2) {
             int listX = highlightedSquares.get(i);
-            int listY = highlightedSquares.get(i+1);
+            int listY = highlightedSquares.get(i + 1);
             g.setColor(Color.RED);
-            g.drawRect(listY * 30, listX * 30,30,30);
+            g.drawRect(listY * 30, listX * 30, 30, 30);
         }
 
 
     }
 
-    public void canMoveVerticaly(int x, int y,int index){
+    public void canMoveVerticaly(int x, int y, int index) {
 
-        if(maze.getSquare(x+index,y)==0){
+        if (maze.getSquare(x + index, y) == 0) {
             player.moveVerticaly(index);
-        }
-        else if(maze.getSquare(x+index,y)==2){
+        } else if (maze.getSquare(x + index, y) == 2) {
             player.moveVerticaly(index);
             won();
         }
     }
-    public void canMoveHorizontaly(int x, int y, int index){
 
-        if(maze.getSquare(x,y+index)==0){
+    public void canMoveHorizontaly(int x, int y, int index) {
+
+        if (maze.getSquare(x, y + index) == 0) {
             player.moveHorizontaly(index);
-        }
-        else if(maze.getSquare(x,y+index)==2){
+        } else if (maze.getSquare(x, y + index) == 2) {
             player.moveHorizontaly(index);
             won();
         }
 
     }
-    public void won(){
+
+    public void won() {
         System.out.println("you won");
         frame.won();
         restart(false);
     }
-    public void showPosibleRoads(){
+
+    public void showPosibleRoads() {
         this.y = player.getyPosition();
         this.x = player.getxPosition();
 
-        posibleDownRoads(x,y);
-        posibleLeftRoads(x,y);
-        posibleRightRoads(x,y);
-        posibleUpRoads(x,y);
+        posibleDownRoads(x, y);
+        posibleLeftRoads(x, y);
+        posibleRightRoads(x, y);
+        posibleUpRoads(x, y);
 
     }
-    void posibleLeftRoads(int x, int y){
-        if((maze.getSquare(x,y-1)==0)||(maze.getSquare(x,y-1)==2)){
+
+    void posibleLeftRoads(int x, int y) {
+        if ((maze.getSquare(x, y - 1) == 0) || (maze.getSquare(x, y - 1) == 2)) {
             highlightedSquares.add(x);
-            highlightedSquares.add(y-1);
-            posibleLeftRoads(x,y-1);
-        }
-    }
-    void posibleRightRoads(int x, int y){
-        if((maze.getSquare(x,y+1)==0)||(maze.getSquare(x,y+1)==2)){
-            highlightedSquares.add(x);
-            highlightedSquares.add(y+1);
-            posibleRightRoads(x,y+1);
-        }
-    }
-    void posibleUpRoads(int x, int y){
-        if((maze.getSquare(x-1,y)==0)||(maze.getSquare(x-1,y)==2)){
-            highlightedSquares.add(x-1);
-            highlightedSquares.add(y);
-            posibleUpRoads(x-1,y);
-        }
-    }
-    void posibleDownRoads(int x, int y){
-        if((maze.getSquare(x+1,y)==0)||(maze.getSquare(x+1,y)==2)){
-            highlightedSquares.add(x+1);
-            highlightedSquares.add(y);
-            posibleDownRoads(x+1,y);
+            highlightedSquares.add(y - 1);
+            posibleLeftRoads(x, y - 1);
         }
     }
 
-    public void posibleMove(int x, int y){
-        for(int i = 0; i<(highlightedSquares.size()-1); i++){
-            if(highlightedSquares.get(i)==x){
-                if(highlightedSquares.get(i+1)==y){
-                    player.setPosition(x,y);
+    void posibleRightRoads(int x, int y) {
+        if ((maze.getSquare(x, y + 1) == 0) || (maze.getSquare(x, y + 1) == 2)) {
+            highlightedSquares.add(x);
+            highlightedSquares.add(y + 1);
+            posibleRightRoads(x, y + 1);
+        }
+    }
+
+    void posibleUpRoads(int x, int y) {
+        if ((maze.getSquare(x - 1, y) == 0) || (maze.getSquare(x - 1, y) == 2)) {
+            highlightedSquares.add(x - 1);
+            highlightedSquares.add(y);
+            posibleUpRoads(x - 1, y);
+        }
+    }
+
+    void posibleDownRoads(int x, int y) {
+        if ((maze.getSquare(x + 1, y) == 0) || (maze.getSquare(x + 1, y) == 2)) {
+            highlightedSquares.add(x + 1);
+            highlightedSquares.add(y);
+            posibleDownRoads(x + 1, y);
+        }
+    }
+
+    public void posibleMove(int x, int y) {
+        for (int i = 0; i < (highlightedSquares.size() - 1); i++) {
+            if (highlightedSquares.get(i) == x) {
+                if (highlightedSquares.get(i + 1) == y) {
+                    player.setPosition(x, y);
                     System.out.println("realne pohol si sa");
-                    if(maze.getSquare(player.getxPosition(),player.getyPosition())==2)
-                    won();
+                    if (maze.getSquare(player.getxPosition(), player.getyPosition()) == 2)
+                        won();
                     break;
                 }
             }
@@ -388,13 +401,15 @@ public class MyCanvas extends Canvas {
         repaint();
     }
 
+
     public void restart(boolean resetLabel) {
-        if(resetLabel)frame.resetNumberOfWins();
-        player.setPosition(1,1);
-        mazeCreation(1,1,true);
+        if (resetLabel) frame.resetNumberOfWins();
+        player.setPosition(1, 1);
+        mazeCreation(1, 1, true);
         repaint();
     }
-    public void listClear(){
+
+    public void listClear() {
         this.highlightedSquares.clear();
     }
 }

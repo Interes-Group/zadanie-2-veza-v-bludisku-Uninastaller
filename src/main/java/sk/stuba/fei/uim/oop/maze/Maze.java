@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.oop;
+package sk.stuba.fei.uim.oop.maze;
 
 import java.util.Random;
 
@@ -33,7 +33,7 @@ public class Maze {
         maze[x][y] = 0;
     }
 
-    int howManyPosibleRouts(int x, int y,int indexOfLookingFor){
+    public int howManyPosibleRouts(int x, int y,int indexOfLookingFor){
 
         for(int i =0; i < 4; i++){
             freeToGo[i] = false;
@@ -58,7 +58,7 @@ public class Maze {
 
     }
 
-    int[] hladajCestu(int actX, int actY){
+    public int[] hladajCestu(int actX, int actY){
 
         int randNumber;
 
@@ -94,10 +94,10 @@ public class Maze {
         return new int[]{actX,actY};
     }
 
-    void openForNextWay(int x, int y){
+    public void openForNextWay(int x, int y){
 
         int[] upDownLeftRight = {0,0,0,0};
-        int pocet = howManyPosibleRouts(x,y,1);
+        howManyPosibleRouts(x,y,1);
         boolean[] freeToGo2 = freeToGo.clone();
 
         for(int i = 0; i<4; i++){

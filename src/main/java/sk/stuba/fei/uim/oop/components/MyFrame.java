@@ -1,12 +1,17 @@
-package sk.stuba.fei.uim.oop;
+package sk.stuba.fei.uim.oop.components;
+
+import lombok.Getter;
+import sk.stuba.fei.uim.oop.listners.MyKeyboardListener;
+import sk.stuba.fei.uim.oop.listners.MyMouseLogger;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MyFrame extends JFrame implements ActionListener{
+public class MyFrame extends JFrame{
 
-    MyCanvas canvas;
+    @Getter
+    private MyFakeCanvas canvas;
     JLabel label1;
     JButton up;
     JButton down;
@@ -29,38 +34,35 @@ public class MyFrame extends JFrame implements ActionListener{
     public MyFrame(String label, int x, int y) {
         super(label);
         this.setSize(650, 700);
-//        this.setResizable(false);
+        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        canvas = new MyCanvas(this,x,y);
+        canvas = new MyFakeCanvas(this,x,y);
         this.add(canvas);
         setVisible(true);
+        MyKeyboardListener keyboardListener = new MyKeyboardListener(canvas);
 
 
         MyPanel panel = new MyPanel(new GridLayout(2, 3));
         panel.setPreferredSize(new Dimension(650, 100));
         panel.setBackground(Color.LIGHT_GRAY);
         this.add(BorderLayout.PAGE_START, panel);
-        restart = new JButton("Restart");
-        up = new JButton("↑");
+        restart = new MyButton("Restart", keyboardListener);
+        up = new MyButton("↑",keyboardListener);
         label1 = new JLabel("   pocet vyhier    " + numberOfWins);
-        left = new JButton("←");
-        down = new JButton("↓");
-        right = new JButton("→");
+        left = new MyButton("←",keyboardListener);
+        down = new MyButton("↓",keyboardListener);
+        right = new MyButton("→",keyboardListener);
         panel.add(restart);
         panel.add(up);
         panel.add(label1);
         panel.add(left);
         panel.add(down);
         panel.add(right);
-        restart.addActionListener(this);
-        up.addActionListener(this);
-        down.addActionListener(this);
-        left.addActionListener(this);
-        right.addActionListener(this);
 
         this.setVisible(true);
         canvas.addMouseListener(myMouseLogger);
+        canvas.addMouseMotionListener(myMouseLogger);
     }
 
     @Override
@@ -71,22 +73,22 @@ public class MyFrame extends JFrame implements ActionListener{
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (e.getSource() == restart) {
-            canvas.restart(true);
-        } else if (e.getSource() == up) {
-            canvas.processKeyEvent("up");
-        } else if (e.getSource() == down) {
-            canvas.processKeyEvent("down");
-        } else if (e.getSource() == left) {
-            canvas.processKeyEvent("left");
-        } else if (e.getSource() == right) {
-            canvas.processKeyEvent("right");
-        }
-        canvas.listClear();
-        this.requestFocus();
-    }
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//
+//        if (e.getSource() == restart) {
+//            canvas.restart(true);
+//        } else if (e.getSource() == up) {
+//            canvas.processKeyEvent("up");
+//        } else if (e.getSource() == down) {
+//            canvas.processKeyEvent("down");
+//        } else if (e.getSource() == left) {
+//            canvas.processKeyEvent("left");
+//        } else if (e.getSource() == right) {
+//            canvas.processKeyEvent("right");
+//        }
+//        canvas.listClear();
+//        this.requestFocus();
+//    }
 }
 
