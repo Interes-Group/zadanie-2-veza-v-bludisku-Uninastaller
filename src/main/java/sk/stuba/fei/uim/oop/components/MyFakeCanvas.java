@@ -15,8 +15,8 @@ public class MyFakeCanvas extends JPanel {
     private Player player;
     private int x;
     private int y;
-    private final int maze_width;
-    private final int maze_length;
+    private final int mazeWidth;
+    private final int mazeLength;
     private boolean[] freeToGo = new boolean[4];
     private List<Integer> highlightedSquares = new ArrayList<Integer>();
     private List<Integer> superHighlightedSquare = new ArrayList<Integer>();
@@ -36,12 +36,12 @@ public class MyFakeCanvas extends JPanel {
 
     public MyFakeCanvas(MyFrame frame, int x, int y) {
 
-        this.maze_width = x;
-        this.maze_length = y;
+        this.frame = frame;
+        this.mazeWidth = x;
+        this.mazeLength = y;
         this.maze = new Maze(x, y, freeToGo);
         player = new Player(1, 1,this);
         maze.mazeCreation(1, 1, true);
-        this.frame = frame;
 
     }
 
@@ -95,8 +95,8 @@ public class MyFakeCanvas extends JPanel {
 
         g.translate(90, 60);
 
-        for (int row = 0; row < maze_width; row++) {
-            for (int col = 0; col < maze_length; col++) {
+        for (int row = 0; row < mazeWidth; row++) {
+            for (int col = 0; col < mazeLength; col++) {
                 Color c;
                 switch (maze.getSquare(row, col)) {
                     case 3:
@@ -138,7 +138,7 @@ public class MyFakeCanvas extends JPanel {
 
     public void won() {
         System.out.println("you won");
-        frame.won();
+        frame.getPanel().won();
         restart(false);
     }
 
@@ -170,6 +170,7 @@ public class MyFakeCanvas extends JPanel {
         }
         return found;
     }
+
     public void Hover(int x, int y){
 
         if(findPossibleMoves(x,y)){
@@ -181,7 +182,7 @@ public class MyFakeCanvas extends JPanel {
     }
 
     public void restart(boolean resetLabel) {
-        if (resetLabel) frame.resetNumberOfWins();
+        if (resetLabel) frame.getPanel().resetNumberOfWins();
         player.setPosition(1, 1);
         maze.mazeCreation(1, 1, true);
         repaint();

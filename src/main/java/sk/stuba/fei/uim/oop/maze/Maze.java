@@ -10,12 +10,13 @@ public class Maze {
     private int actX;
     private int actY;
     private Random rand = new Random();
-    private int maze_width;
-    private int maze_length;
+    private int mazeWidth;
+    private int mazeLength;
 
     public Maze(int width, int length, boolean[] freeToGo) {
-        maze_width = width;
-        maze_length = length;
+
+        mazeWidth = width;
+        mazeLength = length;
         this.freeToGo = freeToGo;
         baseMaze = new int[width][length];
         for(int i = 0; i<width;i++){
@@ -24,19 +25,17 @@ public class Maze {
                 else if((j==0)||(j==(length-1)))baseMaze[i][j]=3;
                 else baseMaze[i][j]=9;
             }
-
         }
         maze = new int[width][length];
+
     }
 
     public void newMaze(){
+
         for (int i = 0; i < maze.length; i++) {
             maze[i] = baseMaze[i].clone();
         }
-    }
-    public void setPath(int x, int y)
-    {
-        maze[x][y] = 0;
+
     }
 
     public int howManyPossibleRouts(int x, int y, int indexOfLookingFor){
@@ -124,6 +123,7 @@ public class Maze {
             }
         }
         upDownLeftRight = decideWhichBlockWillBeDeleted(upDownLeftRight);
+
         for(int i = 0;i<4;i++){
             if(upDownLeftRight[i]!=0){
                 switch (i){
@@ -171,10 +171,15 @@ public class Maze {
             else upDownLeftRight[i] = 1;
         }
         return upDownLeftRight;
+
     }
 
     public void setSquare(int x, int y, int index){
         maze[x][y] = index;
+    }
+    public void setSquare(int x, int y)
+    {
+        setSquare(x,y,0);
     }
 
     public int getSquare(int x, int y){
@@ -182,6 +187,7 @@ public class Maze {
     }
 
     public void mazeCreation(int x, int y, boolean newMaze) {
+
         actX = x;
         actY = y;
         if (newMaze) {
@@ -191,16 +197,16 @@ public class Maze {
         int randDirection;
         while (true) {
 
-            setPath(actX, actY);
+            setSquare(actX, actY);
             randDirection = howManyPossibleRouts(actX, actY, 9);
             if (randDirection == 0) {
                 if (newMaze) setSquare(actX, actY, 2);
-                for (int i = 0; i < maze_width; i++) {
-                    for (int j = 0; j < maze_length; j++) {
+                for (int i = 0; i < mazeWidth; i++) {
+                    for (int j = 0; j < mazeLength; j++) {
                         if (getSquare(i, j) == 9) {
 
                             if (howManyPossibleRouts(i, j, 0) == 0) openForNextWay(i, j);
-                            setSquare(i, j, 0);
+                            setSquare(i, j);
                             mazeCreation(i, j, false);
                         }
                     }
@@ -211,6 +217,7 @@ public class Maze {
             actX = points[0];
             actY = points[1];
         }
+
     }
 
 }

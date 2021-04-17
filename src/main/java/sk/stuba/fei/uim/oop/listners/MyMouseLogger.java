@@ -42,11 +42,9 @@ public class MyMouseLogger extends MouseAdapter {
         y = e.getY();
 
        prepocetNaMojeSuradnice(x,y);
-       System.out.println("click.x:" + x + ", y:" + y);
         if(!mouseMove){
 
             if((x==frame.getCanvas().getPlayer().getXPosition())&&(y==frame.getCanvas().getPlayer().getYPosition())){
-                System.out.println("stlacil si na hraca");
                 mouseMove = true;
                 frame.getCanvas().getPlayer().showPossibleRoads();
                 frame.getCanvas().repaint();
@@ -56,8 +54,6 @@ public class MyMouseLogger extends MouseAdapter {
 
             mouseMove = false;
             frame.getCanvas().possibleMove(x,y);
-            System.out.println(frame.getCanvas().getPlayer().getXPosition() + " " + frame.getCanvas().getPlayer().getYPosition());
-
         }
     }
 

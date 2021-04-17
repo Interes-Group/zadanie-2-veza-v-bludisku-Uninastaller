@@ -29,9 +29,8 @@ public class MyKeyboardListener implements ActionListener {
             case "←":
                 canvas.processKeyEvent("left");
                 break;
-            case "→":
+            default:
                 canvas.processKeyEvent("right");
-                break;
         }
         canvas.listClear();
     }
