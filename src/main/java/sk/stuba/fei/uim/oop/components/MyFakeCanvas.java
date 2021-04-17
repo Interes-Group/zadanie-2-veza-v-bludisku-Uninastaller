@@ -6,8 +6,6 @@ import sk.stuba.fei.uim.oop.maze.Player;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MyFakeCanvas extends JPanel {
 
@@ -18,13 +16,8 @@ public class MyFakeCanvas extends JPanel {
     private final int mazeWidth;
     private final int mazeLength;
     private boolean[] freeToGo = new boolean[4];
-    private List<Integer> highlightedSquares = new ArrayList<Integer>();
-    private List<Integer> superHighlightedSquare = new ArrayList<Integer>();
     private Maze maze;
 
-    public void highlightedSquaresAdd(int x){
-        this.highlightedSquares.add(x);
-    }
 
     public Player getPlayer() {
         return player;
@@ -70,7 +63,7 @@ public class MyFakeCanvas extends JPanel {
 
     protected void processKeyEvent(KeyEvent e) {
 
-        listClear();
+        player.listClear();
         y = player.getYPosition();
         x = player.getXPosition();
 
@@ -121,17 +114,17 @@ public class MyFakeCanvas extends JPanel {
         g.setColor(Color.ORANGE);
         g.fillOval(player.getYPosition() * 30 + 1, player.getXPosition() * 30 + 1, 28, 28);
 
-        for (int i = 0; i < highlightedSquares.size(); i += 2) {
-            int listX = highlightedSquares.get(i);
-            int listY = highlightedSquares.get(i + 1);
+        for (int i = 0; i < player.highlightedSquaresSize(); i += 2) {
+            int listX = player.getHighlightedSquares(i);
+            int listY = player.getHighlightedSquares(i + 1);
             g.setColor(Color.RED);
             g.drawRect(listY * 30, listX * 30, 30, 30);
         }
 
-        if(superHighlightedSquare.size()>0){
+        if(player.superHighlightedSquareSize()>0){
             g.setColor(Color.GREEN);
-            g.fillRect(superHighlightedSquare.get(1)*30,superHighlightedSquare.get(0)*30,30,30);
-            superHighlightedSquare.clear();
+            g.fillRect(player.getSuperHighlightedSquare(1)*30,player.getSuperHighlightedSquare(0)*30,30,30);
+            player.superListClear();
         }
 
     }
@@ -142,45 +135,6 @@ public class MyFakeCanvas extends JPanel {
         restart(false);
     }
 
-    public void possibleMove(int x, int y){
-
-        if(findPossibleMoves(x,y)){
-            player.setPosition(this.x, this.y);
-            if (maze.getSquare(player.getXPosition(), player.getYPosition()) == 2)
-                won();
-        }
-        listClear();
-        repaint();
-    }
-
-
-    public boolean findPossibleMoves(int x, int y) {
-
-        boolean found = false;
-
-        for (int i = 0; i < (highlightedSquares.size()-1); i+=2) {
-            if (highlightedSquares.get(i) == x) {
-                if (highlightedSquares.get(i + 1) == y) {
-                    this.x = x;
-                    this.y = y;
-                    found = true;
-                    break;
-                }
-            }
-        }
-        return found;
-    }
-
-    public void Hover(int x, int y){
-
-        if(findPossibleMoves(x,y)){
-            superHighlightedSquare.add(this.x);
-            superHighlightedSquare.add(this.y);
-        }
-        repaint();
-
-    }
-
     public void restart(boolean resetLabel) {
         if (resetLabel) frame.getPanel().resetNumberOfWins();
         player.setPosition(1, 1);
@@ -188,7 +142,4 @@ public class MyFakeCanvas extends JPanel {
         repaint();
     }
 
-    public void listClear() {
-        this.highlightedSquares.clear();
-    }
 }

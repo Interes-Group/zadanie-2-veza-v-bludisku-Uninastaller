@@ -32,7 +32,7 @@ public class MyKeyboardListener implements ActionListener {
             default:
                 canvas.processKeyEvent("right");
         }
-        canvas.listClear();
+        canvas.getPlayer().listClear();
     }
 
 }
