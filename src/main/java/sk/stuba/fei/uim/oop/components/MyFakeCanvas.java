@@ -15,7 +15,6 @@ public class MyFakeCanvas extends JPanel {
     private int y;
     private final int mazeWidth;
     private final int mazeLength;
-    private boolean[] freeToGo = new boolean[4];
     private Maze maze;
 
 
@@ -32,7 +31,7 @@ public class MyFakeCanvas extends JPanel {
         this.frame = frame;
         this.mazeWidth = x;
         this.mazeLength = y;
-        this.maze = new Maze(x, y,freeToGo);
+        this.maze = new Maze(x, y);
         player = new Player(1, 1,this);
         maze.mazeCreation(1, 1);
 

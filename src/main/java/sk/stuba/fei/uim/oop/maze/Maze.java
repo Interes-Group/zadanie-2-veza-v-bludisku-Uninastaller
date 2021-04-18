@@ -2,24 +2,20 @@ package sk.stuba.fei.uim.oop.maze;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 public class Maze {
 
     private int[][] maze;
     private int[][] baseMaze;
-    private boolean[] freeToGo;
     private int actX;
     private int actY;
-    private Random rand = new Random();
     private int mazeWidth;
     private int mazeLength;
 
-    public Maze(int width, int length, boolean[] freeToGo) {
+    public Maze(int width, int length) {
 
         mazeWidth = width;
         mazeLength = length;
-        this.freeToGo = freeToGo;
         baseMaze = new int[width][length];
         for(int i = 0; i<width;i++){
             for(int j =0; j<length;j++){
@@ -43,12 +39,12 @@ public class Maze {
     /////////////////////////////////
 
     public Integer[] generateRandomDirections() {
-        ArrayList<Integer> randoms = new ArrayList<Integer>();
-        for (int i = 0; i < 4; i++)
-            randoms.add(i + 1);
-        Collections.shuffle(randoms);
+        ArrayList<Integer> directions = new ArrayList<Integer>();
+        for (int i = 1; i < 5; i++)
+            directions.add(i);
+        Collections.shuffle(directions);
 
-        return randoms.toArray(new Integer[4]);
+        return directions.toArray(new Integer[4]);
     }
 
 
@@ -189,14 +185,6 @@ public class Maze {
 //
 //    }
 
-    public void setSquare(int x, int y, int index){
-        maze[x][y] = index;
-    }
-    public void setSquare(int x, int y)
-    {
-        setSquare(x,y,0);
-    }
-
     public int getSquare(int x, int y){
         return maze[x][y];
     }
@@ -206,27 +194,9 @@ public class Maze {
         actX = x;
         actY = y;
         newMaze();
-        recursive(actX,actY,true);
+        depthFirst(actX,actY);
 
-        int pocet = 0;
-
-        for(int i = 0; i < mazeWidth; i++){
-            for(int j = 0; j < mazeLength; j++){
-                if(maze[i][j]==0){
-                    pocet = 0;
-                    if(maze[i+1][j]==9)pocet++;
-                    if(maze[i-1][j]==9)pocet++;
-                    if(maze[i][j+1]==9)pocet++;
-                    if(maze[i][j-1]==9)pocet++;
-                    if(pocet==3) {
-                        actX = i;
-                        actY = j;
-                    }
-                }
-            }
-        }
-
-        maze[actX][actY]=2;
+        setFinish();
 
 
 
@@ -263,59 +233,75 @@ public class Maze {
 
     }
 
-    void recursive(int actX, int actY, boolean mainRoute){
+    void depthFirst(int actX, int actY){
 
-        // 4 random directions
         vipis();
 
-        Integer[] randDirs = generateRandomDirections();
-        // Examine each direction
-        for (int i = 0; i < randDirs.length; i++) {
+        Integer[] directions = generateRandomDirections();
 
-            switch (randDirs[i]) {
-                case 1: // Up
-                    //　Whether 2 cells up is out or not
-                    if (actX - 2 <= 0)
-                        continue;
-                    if (maze[actX - 2][actY] == 9) {
-                        maze[actX - 2][actY] = 0;
-                        maze[actX - 1][actY] = 0;
-                        recursive(actX - 2, actY,false);
-                    }
-                    break;
-                case 2: // Right
-                    // Whether 2 cells to the right is out or not
-                    if (actY + 2 >= mazeWidth - 1)
-                        continue;
-                    if (maze[actX][actY + 2] == 9) {
-                        maze[actX][actY + 2] = 0;
-                        maze[actX][actY + 1] = 0;
-                        recursive(actX, actY + 2,false);
-                    }
-                    break;
-                case 3: // Down
-                    // Whether 2 cells down is out or not
-                    if (actX + 2 >= mazeLength - 1)
-                        continue;
-                    if (maze[actX + 2][actY] == 9) {
-                        maze[actX + 2][actY] = 0;
-                        maze[actX + 1][actY] = 0;
-                        recursive(actX + 2, actY,false);
-                    }
-                    break;
-                case 4: // Left
-                    // Whether 2 cells to the left is out or not
-                    if (actY - 2 <= 0)
-                        continue;
-                    if (maze[actX][actY - 2] == 9) {
-                        maze[actX][actY - 2] = 0;
-                        maze[actX][actY - 1] = 0;
-                        recursive(actX, actY - 2,false);
-                    }
-                    break;
+//        for (int i = 0; i < directions.length; i++) {
+//
+//            switch (directions[i]) {
+//                case 1: // Up
+//                    //　Whether 2 cells up is out or not
+//                    if (actX - 2 <= 0)
+//                        continue;
+//                    if (maze[actX - 2][actY] == 9) {
+//                        maze[actX - 2][actY] =  maze[actX - 1][actY] = 0;
+//                        depthFirst(actX - 2, actY);
+//                    }
+//                    break;
+//                case 2: // Right
+//                    // Whether 2 cells to the right is out or not
+//                    if (actY + 2 >= mazeWidth - 1)
+//                        continue;
+//                    if (maze[actX][actY + 2] == 9) {
+//                        maze[actX][actY + 2] =  maze[actX][actY + 1] = 0;
+//                        depthFirst(actX, actY + 2);
+//                    }
+//                    break;
+//                case 3: // Down
+//                    // Whether 2 cells down is out or not
+//                    if (actX + 2 >= mazeLength - 1)
+//                        continue;
+//                    if (maze[actX + 2][actY] == 9) {
+//                        maze[actX + 2][actY] = maze[actX + 1][actY] = 0;
+//                        depthFirst(actX + 2, actY);
+//                    }
+//                    break;
+//                case 4: // Left
+//                    // Whether 2 cells to the left is out or not
+//                    if (actY - 2 <= 0)
+//                        continue;
+//                    if (maze[actX][actY - 2] == 9) {
+//                        maze[actX][actY - 2] = maze[actX][actY - 1] = 0;
+//                        depthFirst(actX, actY - 2);
+//                    }
+//                    break;
+//            }
+//        }
+
+        for (Integer direction : directions) {
+
+            if ((direction == 1) && (!(actX - 2 <= 0)) && (maze[actX - 2][actY] == 9)) {
+                maze[actX - 2][actY] = maze[actX - 1][actY] = 0;
+                depthFirst(actX - 2, actY);
             }
-        }
 
+            if ((direction == 2) && (!(actY + 2 >= mazeWidth - 1)) && (maze[actX][actY + 2] == 9)) {
+                maze[actX][actY + 2] = maze[actX][actY + 1] = 0;
+                depthFirst(actX, actY + 2);
+            }
+            if ((direction == 3) && (!(actX + 2 >= mazeLength - 1)) && (maze[actX + 2][actY] == 9)) {
+                maze[actX + 2][actY] = maze[actX + 1][actY] = 0;
+                depthFirst(actX + 2, actY);
+            }
+            if ((direction == 4) && (!(actY - 2 <= 0)) && (maze[actX][actY - 2] == 9)) {
+                maze[actX][actY - 2] = maze[actX][actY - 1] = 0;
+                depthFirst(actX, actY - 2);
+            }
+
+        }
     }
 
 
@@ -327,6 +313,29 @@ public class Maze {
             }
             System.out.println();
         }
+
+    }
+
+    void setFinish(){
+
+        int pocet;
+
+        for(int i = 0; i < mazeWidth; i++){
+            for(int j = 0; j < mazeLength; j++){
+                if(maze[i][j]==0){
+                    pocet = 0;
+                    if(maze[i+1][j]==9)pocet++;
+                    if(maze[i-1][j]==9)pocet++;
+                    if(maze[i][j+1]==9)pocet++;
+                    if(maze[i][j-1]==9)pocet++;
+                    if(pocet==3) {
+                        actX = i;
+                        actY = j;
+                    }
+                }
+            }
+        }
+        maze[actX][actY]=2;
 
     }
 
