@@ -32,9 +32,9 @@ public class MyFakeCanvas extends JPanel {
         this.frame = frame;
         this.mazeWidth = x;
         this.mazeLength = y;
-        this.maze = new Maze(x, y, freeToGo);
+        this.maze = new Maze(x, y,freeToGo);
         player = new Player(1, 1,this);
-        maze.mazeCreation(1, 1, true);
+        maze.mazeCreation(1, 1);
 
     }
 
@@ -138,7 +138,7 @@ public class MyFakeCanvas extends JPanel {
     public void restart(boolean resetLabel) {
         if (resetLabel) frame.getPanel().resetNumberOfWins();
         player.setPosition(1, 1);
-        maze.mazeCreation(1, 1, true);
+        maze.mazeCreation(1, 1);
         repaint();
     }
 
