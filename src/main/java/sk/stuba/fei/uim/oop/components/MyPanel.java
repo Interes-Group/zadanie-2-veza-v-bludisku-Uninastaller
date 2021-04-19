@@ -21,11 +21,11 @@ public class MyPanel extends JPanel {
         setPreferredSize(new Dimension(650, 100));
         setBackground(Color.LIGHT_GRAY);
         restart = new MyButton("Restart", keyboardListener);
-        up = new MyButton("↑",keyboardListener);
+        up = new MyButton("↑", keyboardListener);
         label1 = new JLabel("   pocet vyhier    " + numberOfWins);
-        left = new MyButton("←",keyboardListener);
-        down = new MyButton("↓",keyboardListener);
-        right = new MyButton("→",keyboardListener);
+        left = new MyButton("←", keyboardListener);
+        down = new MyButton("↓", keyboardListener);
+        right = new MyButton("→", keyboardListener);
         add(restart);
         add(up);
         add(label1);
@@ -35,7 +35,7 @@ public class MyPanel extends JPanel {
 
     }
 
-    public void resetNumberOfWins(){
+    public void resetNumberOfWins() {
         numberOfWins = 0;
         label1.setText("   pocet vyhier    " + numberOfWins);
     }

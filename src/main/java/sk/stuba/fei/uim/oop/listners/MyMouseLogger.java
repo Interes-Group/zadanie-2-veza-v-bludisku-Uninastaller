@@ -24,10 +24,10 @@ public class MyMouseLogger extends MouseAdapter {
         x = e.getX();
         y = e.getY();
 
-        getCoordinatesByValue(x,y);
+        getCoordinatesByValue(x, y);
         System.out.println("pohyb.x:" + x + ", y:" + y);
-        if(mouseMove){
-           frame.getCanvas().getPlayer().Hover(x,y);
+        if (mouseMove) {
+            frame.getCanvas().getPlayer().Hover(x, y);
         }
 
     }
@@ -36,35 +36,33 @@ public class MyMouseLogger extends MouseAdapter {
     public void mouseClicked(MouseEvent e) {
 
 
-
         System.out.println(e.getPoint());
         x = e.getX();
         y = e.getY();
 
-       getCoordinatesByValue(x,y);
-        if(!mouseMove){
+        getCoordinatesByValue(x, y);
+        if (!mouseMove) {
 
-            if((x==frame.getCanvas().getPlayer().getXPosition())&&(y==frame.getCanvas().getPlayer().getYPosition())){
+            if ((x == frame.getCanvas().getPlayer().getXPosition()) && (y == frame.getCanvas().getPlayer().getYPosition())) {
                 mouseMove = true;
                 frame.getCanvas().getPlayer().showPossibleRoads();
                 frame.getCanvas().repaint();
             }
-        }
-        else {
+        } else {
 
             mouseMove = false;
-            frame.getCanvas().getPlayer().possibleMove(x,y);
+            frame.getCanvas().getPlayer().possibleMove(x, y);
         }
     }
 
-    void getCoordinatesByValue(int x, int y){
+    void getCoordinatesByValue(int x, int y) {
         int variable = x % 30;
         x = x - variable - 90;
-        x /=30;
+        x /= 30;
 
-        variable = y%30;
+        variable = y % 30;
         y = y - variable - 60;
-        y /=30;
+        y /= 30;
 
         variable = x;
         this.x = y;

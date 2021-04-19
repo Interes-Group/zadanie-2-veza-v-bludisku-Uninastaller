@@ -29,10 +29,10 @@ public class MyFakeCanvas extends JPanel {
     public MyFakeCanvas(MyFrame frame, int x, int y) {
 
         this.frame = frame;
-        this.mazeWidth = x;
-        this.mazeLength = y;
+        this.mazeLength = x;
+        this.mazeWidth = y;
         this.maze = new Maze(x, y);
-        player = new Player(1, 1,this);
+        player = new Player(1, 1, this);
         maze.mazeCreation(1, 1);
 
     }
@@ -87,22 +87,18 @@ public class MyFakeCanvas extends JPanel {
 
         g.translate(90, 60);
 
-        for (int row = 0; row < mazeWidth; row++) {
-            for (int col = 0; col < mazeLength; col++) {
+        for (int row = 0; row < mazeLength; row++) {
+            for (int col = 0; col < mazeWidth; col++) {
                 Color c;
                 switch (maze.getSquare(row, col)) {
-                    case 3:
-                    case 1:
+                    case 9:
                         c = Color.BLACK;
                         break;
                     case 2:
                         c = Color.CYAN;
                         break;
-                    case 0:
-                        c = Color.WHITE;
-                        break;
                     default:
-                        c = Color.MAGENTA;
+                        c = Color.WHITE;
                 }
                 g.setColor(c);
                 g.fillRect(30 * col, 30 * row, 30, 30);
@@ -120,9 +116,9 @@ public class MyFakeCanvas extends JPanel {
             g.drawRect(listY * 30, listX * 30, 30, 30);
         }
 
-        if(player.superHighlightedSquareSize()>0){
+        if (player.superHighlightedSquareSize() > 0) {
             g.setColor(Color.GREEN);
-            g.fillRect(player.getSuperHighlightedSquare(1)*30,player.getSuperHighlightedSquare(0)*30,30,30);
+            g.fillRect(player.getSuperHighlightedSquare(1) * 30, player.getSuperHighlightedSquare(0) * 30, 30, 30);
             player.superListClear();
         }
 

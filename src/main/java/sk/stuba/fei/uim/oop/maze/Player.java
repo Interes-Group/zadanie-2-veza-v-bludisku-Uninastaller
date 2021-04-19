@@ -15,7 +15,7 @@ public class Player {
     private List<Integer> highlightedSquares = new ArrayList<Integer>();
     private List<Integer> superHighlightedSquare = new ArrayList<Integer>();
 
-    public Player(int xPosition,int yPosition, MyFakeCanvas canvas) {
+    public Player(int xPosition, int yPosition, MyFakeCanvas canvas) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.canvas = canvas;
@@ -29,10 +29,11 @@ public class Player {
         return yPosition;
     }
 
-    public void moveHorizontally(int index){
+    public void moveHorizontally(int index) {
         yPosition += index;
     }
-    public void moveVertically(int index){
+
+    public void moveVertically(int index) {
         xPosition += index;
     }
 
@@ -107,7 +108,7 @@ public class Player {
 
         boolean found = false;
 
-        for (int i = 0; i < (highlightedSquares.size()-1); i+=2) {
+        for (int i = 0; i < (highlightedSquares.size() - 1); i += 2) {
             if (highlightedSquares.get(i) == x) {
                 if (highlightedSquares.get(i + 1) == y) {
                     this.x = x;
@@ -120,20 +121,20 @@ public class Player {
         return found;
     }
 
-    public void possibleMove(int x, int y){
+    public void possibleMove(int x, int y) {
 
-        if(findPossibleMoves(x,y)){
+        if (findPossibleMoves(x, y)) {
             canvas.getPlayer().setPosition(this.x, this.y);
-            if (canvas.getMaze().getSquare(canvas.getPlayer().getXPosition(),canvas.getPlayer().getYPosition()) == 2)
+            if (canvas.getMaze().getSquare(canvas.getPlayer().getXPosition(), canvas.getPlayer().getYPosition()) == 2)
                 canvas.won();
         }
         listClear();
         canvas.repaint();
     }
 
-    public void Hover(int x, int y){
+    public void Hover(int x, int y) {
 
-        if(findPossibleMoves(x,y)){
+        if (findPossibleMoves(x, y)) {
             superHighlightedSquare.add(this.x);
             superHighlightedSquare.add(this.y);
         }
@@ -141,24 +142,24 @@ public class Player {
 
     }
 
-    public void highlightedSquaresAdd(int x){
+    public void highlightedSquaresAdd(int x) {
         this.highlightedSquares.add(x);
     }
 
-    public int highlightedSquaresSize(){
+    public int highlightedSquaresSize() {
         return highlightedSquares.size();
     }
 
-    public int getHighlightedSquares(int x){
+    public int getHighlightedSquares(int x) {
         return highlightedSquares.get(x);
     }
 
 
-    public int superHighlightedSquareSize(){
+    public int superHighlightedSquareSize() {
         return superHighlightedSquare.size();
     }
 
-    public int getSuperHighlightedSquare(int x){
+    public int getSuperHighlightedSquare(int x) {
         return superHighlightedSquare.get(x);
     }
 

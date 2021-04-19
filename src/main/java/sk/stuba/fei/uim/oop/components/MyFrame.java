@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MyFrame extends JFrame{
+public class MyFrame extends JFrame {
 
     private MyFakeCanvas canvas;
     private MyPanel panel;
@@ -21,10 +21,10 @@ public class MyFrame extends JFrame{
         return panel;
     }
 
-    public MyFrame(String label, int width, int length) {
+    public MyFrame(String label, int lenght, int width) {
 
         super(label);
-        canvas = new MyFakeCanvas(this,width,length);
+        canvas = new MyFakeCanvas(this, lenght, width);
         this.setSize(650, 700);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,7 +32,7 @@ public class MyFrame extends JFrame{
         this.add(canvas);
         this.setVisible(true);
 
-        panel = new MyPanel(new GridLayout(2, 3),new MyKeyboardListener(canvas));
+        panel = new MyPanel(new GridLayout(2, 3), new MyKeyboardListener(canvas));
         this.add(BorderLayout.PAGE_START, panel);
         this.setVisible(true);
 
