@@ -33,6 +33,8 @@ public class Maze {
         directions.add(new DirectionDown(this,mazeLength));
         directions.add(new DirectionLeft(this));
 
+        mazeCreation(1, 1);
+
     }
 
     public void newMaze() {
@@ -67,7 +69,7 @@ public class Maze {
 
     }
 
-    void depthFirst(int actX, int actY) {
+    public void depthFirst(int actX, int actY) {
 
         Integer[] directions = generateRandomDirections();
 

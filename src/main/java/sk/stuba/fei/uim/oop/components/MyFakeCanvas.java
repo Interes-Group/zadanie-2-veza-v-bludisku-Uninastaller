@@ -33,7 +33,6 @@ public class MyFakeCanvas extends JPanel {
         this.mazeWidth = y;
         this.maze = new Maze(x, y);
         player = new Player(1, 1, this);
-        maze.mazeCreation(1, 1);
 
     }
 
@@ -118,20 +117,19 @@ public class MyFakeCanvas extends JPanel {
 
         if (player.superHighlightedSquareSize() > 0) {
             g.setColor(Color.GREEN);
-            g.fillRect(player.getSuperHighlightedSquare(1) * 30, player.getSuperHighlightedSquare(0) * 30, 30, 30);
+            g.fillOval(player.getSuperHighlightedSquare(1) * 30 + 4, player.getSuperHighlightedSquare(0) * 30 + 4, 22, 22);
             player.superListClear();
         }
 
     }
 
     public void won() {
-        System.out.println("you won");
-        frame.getPanel().won();
+        frame.getPanel().won(false);
         restart(false);
     }
 
     public void restart(boolean resetLabel) {
-        if (resetLabel) frame.getPanel().resetNumberOfWins();
+        if (resetLabel) frame.getPanel().won(true);
         player.setPosition(1, 1);
         maze.mazeCreation(1, 1);
         repaint();

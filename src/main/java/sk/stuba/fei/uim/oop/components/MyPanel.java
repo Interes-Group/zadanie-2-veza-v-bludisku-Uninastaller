@@ -35,13 +35,13 @@ public class MyPanel extends JPanel {
 
     }
 
-    public void resetNumberOfWins() {
-        numberOfWins = 0;
-        label1.setText("   pocet vyhier    " + numberOfWins);
+    public void won(boolean reset) {
+        if (reset) numberOfWins = 0;
+        else numberOfWins += 1;
+        setLabel();
     }
 
-    public void won() {
-        numberOfWins += 1;
+    void setLabel() {
         label1.setText("   pocet vyhier    " + numberOfWins);
     }
 

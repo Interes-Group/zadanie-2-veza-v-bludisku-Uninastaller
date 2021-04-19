@@ -1,5 +1,6 @@
 package sk.stuba.fei.uim.oop.listners;
 
+import sk.stuba.fei.uim.oop.components.MyFakeCanvas;
 import sk.stuba.fei.uim.oop.components.MyFrame;
 
 import java.awt.event.MouseAdapter;
@@ -10,24 +11,22 @@ public class MyMouseLogger extends MouseAdapter {
     private int x;
     private int y;
     private boolean mouseMove;
+    private MyFakeCanvas canvas;
 
-    private MyFrame frame;
-
-    public MyMouseLogger(MyFrame frame) {
-        this.frame = frame;
+    public MyMouseLogger(MyFakeCanvas canvas) {
+        this.canvas = canvas;
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
 
-        System.out.println(e.getPoint());
         x = e.getX();
         y = e.getY();
 
         getCoordinatesByValue(x, y);
-        System.out.println("pohyb.x:" + x + ", y:" + y);
+
         if (mouseMove) {
-            frame.getCanvas().getPlayer().Hover(x, y);
+            canvas.getPlayer().Hover(x, y);
         }
 
     }
@@ -35,27 +34,26 @@ public class MyMouseLogger extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-
-        System.out.println(e.getPoint());
         x = e.getX();
         y = e.getY();
 
         getCoordinatesByValue(x, y);
         if (!mouseMove) {
 
-            if ((x == frame.getCanvas().getPlayer().getXPosition()) && (y == frame.getCanvas().getPlayer().getYPosition())) {
+            if ((x == canvas.getPlayer().getXPosition()) && (y == canvas.getPlayer().getYPosition())) {
                 mouseMove = true;
-                frame.getCanvas().getPlayer().showPossibleRoads();
-                frame.getCanvas().repaint();
+                canvas.getPlayer().showPossibleRoads();
+                canvas.repaint();
             }
         } else {
 
             mouseMove = false;
-            frame.getCanvas().getPlayer().possibleMove(x, y);
+            canvas.getPlayer().possibleMove(x, y);
         }
     }
 
     void getCoordinatesByValue(int x, int y) {
+
         int variable = x % 30;
         x = x - variable - 90;
         x /= 30;
@@ -68,7 +66,6 @@ public class MyMouseLogger extends MouseAdapter {
         this.x = y;
         this.y = variable;
 
-//        System.out.println("x:" + x + ", y:" + y);
     }
 
 }
