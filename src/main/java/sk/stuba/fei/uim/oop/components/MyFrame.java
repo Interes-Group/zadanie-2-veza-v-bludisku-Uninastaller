@@ -40,7 +40,8 @@ public class MyFrame extends JFrame {
     @Override
     protected void processKeyEvent(KeyEvent e) {
 
-        canvas.processKeyEvent(e);
+        if (e.getID() == KeyEvent.KEY_PRESSED)
+        canvas.listenerHandler(String.valueOf(e.getKeyCode()));
 
     }
 

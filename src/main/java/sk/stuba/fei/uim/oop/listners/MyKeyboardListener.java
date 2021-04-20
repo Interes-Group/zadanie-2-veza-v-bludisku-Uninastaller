@@ -16,23 +16,8 @@ public class MyKeyboardListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        switch (e.getActionCommand()) {
-            case "Restart":
-                canvas.restart(true);
-                break;
-            case "↑":
-                canvas.processKeyEvent("up");
-                break;
-            case "↓":
-                canvas.processKeyEvent("down");
-                break;
-            case "←":
-                canvas.processKeyEvent("left");
-                break;
-            default:
-                canvas.processKeyEvent("right");
-        }
-        canvas.getPlayer().listClear();
+        canvas.listenerHandler(e.getActionCommand());
+
     }
 
 }

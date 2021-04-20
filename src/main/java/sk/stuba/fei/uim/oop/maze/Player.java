@@ -13,7 +13,7 @@ public class Player {
     private int y;
     private MyFakeCanvas canvas;
     private List<Integer> highlightedSquares = new ArrayList<Integer>();
-    private List<Integer> superHighlightedSquare = new ArrayList<Integer>();
+    private List<Integer> highlightedCircle = new ArrayList<Integer>();
 
     public Player(int xPosition, int yPosition, MyFakeCanvas canvas) {
         this.xPosition = xPosition;
@@ -128,15 +128,15 @@ public class Player {
             if (canvas.getMaze().getSquare(canvas.getPlayer().getXPosition(), canvas.getPlayer().getYPosition()) == 2)
                 canvas.won();
         }
-        listClear();
+        squareListClear();
         canvas.repaint();
     }
 
     public void Hover(int x, int y) {
 
         if (findPossibleMoves(x, y)) {
-            superHighlightedSquare.add(this.x);
-            superHighlightedSquare.add(this.y);
+            highlightedCircle.add(this.x);
+            highlightedCircle.add(this.y);
         }
         canvas.repaint();
 
@@ -154,21 +154,20 @@ public class Player {
         return highlightedSquares.get(x);
     }
 
-
-    public int superHighlightedSquareSize() {
-        return superHighlightedSquare.size();
+    public int highlightedCircleSize() {
+        return highlightedCircle.size();
     }
 
-    public int getSuperHighlightedSquare(int x) {
-        return superHighlightedSquare.get(x);
+    public int getHighlightedCircle(int x) {
+        return highlightedCircle.get(x);
     }
 
-    public void listClear() {
+    public void squareListClear() {
         this.highlightedSquares.clear();
     }
 
-    public void superListClear() {
-        this.superHighlightedSquare.clear();
+    public void circleListClear() {
+        this.highlightedCircle.clear();
     }
 
 }

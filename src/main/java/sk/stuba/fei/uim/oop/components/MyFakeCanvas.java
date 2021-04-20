@@ -1,11 +1,11 @@
 package sk.stuba.fei.uim.oop.components;
 
-import sk.stuba.fei.uim.oop.maze.Maze;
-import sk.stuba.fei.uim.oop.maze.Player;
+import sk.stuba.fei.uim.oop.maze.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyFakeCanvas extends JPanel {
 
@@ -15,7 +15,9 @@ public class MyFakeCanvas extends JPanel {
     private int y;
     private final int mazeWidth;
     private final int mazeLength;
+    private List<Move> moves;
     private Maze maze;
+    private final String
 
 
     public Player getPlayer() {
@@ -33,56 +35,59 @@ public class MyFakeCanvas extends JPanel {
         this.mazeWidth = y;
         this.maze = new Maze(x, y);
         player = new Player(1, 1, this);
+        moves = new ArrayList<>();
+        moves.add(new VerticalMove());
+        moves.add(new HorizontalMove());
+
 
     }
 
-    public void processKeyEvent(String move) {
+    public void listenerHandler(String move) {
 
         y = player.getYPosition();
         x = player.getXPosition();
+
+
+        moves.get(0).move(move,x,y);
 
         switch (move) {
-            case "up":
+            case "38":
+            case "↑":
                 player.canMoveVertically(x, y, -1);
                 break;
-            case "down":
+            case "40":
+            case "↓":
                 player.canMoveVertically(x, y, 1);
                 break;
-            case "left":
+            case "37":
+            case "←":
                 player.canMoveHorizontally(x, y, -1);
                 break;
-            default:
+            case "39":
+            case "→":
                 player.canMoveHorizontally(x, y, 1);
+                break;
+            default:
+                restart(true);
 
         }
+        player.squareListClear();
         repaint();
 
-    }
-
-    protected void processKeyEvent(KeyEvent e) {
-
-        player.listClear();
-        y = player.getYPosition();
-        x = player.getXPosition();
-
-        if (e.getID() != KeyEvent.KEY_PRESSED) {
-            return;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            player.canMoveHorizontally(x, y, 1);
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            player.canMoveHorizontally(x, y, -1);
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            player.canMoveVertically(x, y, 1);
-        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            player.canMoveVertically(x, y, -1);
-        }
-        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+
         super.paintComponent(g);
+        paintMaze(g);
+        paintPlayer(g);
+        paintHighlightedSquares(g);
+        paintHighlightedCircle(g);
+
+    }
+
+    void paintMaze(Graphics g){
 
         g.translate(90, 60);
 
@@ -105,8 +110,17 @@ public class MyFakeCanvas extends JPanel {
                 g.drawRect(30 * col, 30 * row, 30, 30);
             }
         }
+
+    }
+
+    void paintPlayer(Graphics g){
+
         g.setColor(Color.ORANGE);
         g.fillOval(player.getYPosition() * 30 + 1, player.getXPosition() * 30 + 1, 28, 28);
+
+    }
+
+    void paintHighlightedSquares(Graphics g){
 
         for (int i = 0; i < player.highlightedSquaresSize(); i += 2) {
             int listX = player.getHighlightedSquares(i);
@@ -115,10 +129,14 @@ public class MyFakeCanvas extends JPanel {
             g.drawRect(listY * 30, listX * 30, 30, 30);
         }
 
-        if (player.superHighlightedSquareSize() > 0) {
+    }
+
+    void paintHighlightedCircle(Graphics g){
+
+        if (player.highlightedCircleSize() > 0) {
             g.setColor(Color.GREEN);
-            g.fillOval(player.getSuperHighlightedSquare(1) * 30 + 4, player.getSuperHighlightedSquare(0) * 30 + 4, 22, 22);
-            player.superListClear();
+            g.fillOval(player.getHighlightedCircle(1) * 30 + 4, player.getHighlightedCircle(0) * 30 + 4, 22, 22);
+            player.circleListClear();
         }
 
     }
