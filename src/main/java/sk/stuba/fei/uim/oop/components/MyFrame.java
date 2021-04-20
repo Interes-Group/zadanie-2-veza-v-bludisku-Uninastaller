@@ -12,6 +12,7 @@ public class MyFrame extends JFrame {
     private MyFakeCanvas canvas;
     private MyPanel panel;
     private MyMouseLogger myMouseLogger;
+    private final int VK_LEFT = 37;
 
     public MyPanel getPanel() {
         return panel;
@@ -41,7 +42,7 @@ public class MyFrame extends JFrame {
     protected void processKeyEvent(KeyEvent e) {
 
         if (e.getID() == KeyEvent.KEY_PRESSED)
-        canvas.listenerHandler(String.valueOf(e.getKeyCode()));
+            canvas.listenerHandler(e.getKeyCode() - VK_LEFT);
 
     }
 

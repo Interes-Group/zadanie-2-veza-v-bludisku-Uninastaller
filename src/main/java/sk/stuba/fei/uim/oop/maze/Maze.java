@@ -1,5 +1,7 @@
 package sk.stuba.fei.uim.oop.maze;
 
+import sk.stuba.fei.uim.oop.maze.randomizedDepthFirst.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,8 +31,8 @@ public class Maze {
 
         directions = new ArrayList<>();
         directions.add(new DirectionUp(this));
-        directions.add(new DirectionRight(this,mazeWidth));
-        directions.add(new DirectionDown(this,mazeLength));
+        directions.add(new DirectionRight(this, mazeWidth));
+        directions.add(new DirectionDown(this, mazeLength));
         directions.add(new DirectionLeft(this));
 
         mazeCreation(1, 1);
@@ -75,7 +77,7 @@ public class Maze {
 
         for (Integer direction : directions) {
 
-            this.directions.get(direction).move(actX,actY);
+            this.directions.get(direction).move(actX, actY);
 
         }
     }

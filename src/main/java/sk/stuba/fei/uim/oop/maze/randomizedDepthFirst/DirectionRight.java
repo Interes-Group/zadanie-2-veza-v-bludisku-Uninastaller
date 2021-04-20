@@ -1,10 +1,13 @@
-package sk.stuba.fei.uim.oop.maze;
+package sk.stuba.fei.uim.oop.maze.randomizedDepthFirst;
 
-public class DirectionRight extends Direction{
+import sk.stuba.fei.uim.oop.maze.Maze;
+import sk.stuba.fei.uim.oop.maze.randomizedDepthFirst.Direction;
+
+public class DirectionRight extends Direction {
 
     private int mazeWidth;
 
-    public DirectionRight(Maze maze,int mazeWidth) {
+    public DirectionRight(Maze maze, int mazeWidth) {
         super(maze);
         this.mazeWidth = mazeWidth;
     }

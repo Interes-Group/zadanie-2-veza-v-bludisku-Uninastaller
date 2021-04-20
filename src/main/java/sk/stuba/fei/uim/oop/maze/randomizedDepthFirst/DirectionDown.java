@@ -1,6 +1,9 @@
-package sk.stuba.fei.uim.oop.maze;
+package sk.stuba.fei.uim.oop.maze.randomizedDepthFirst;
 
-public class DirectionDown extends Direction{
+import sk.stuba.fei.uim.oop.maze.Maze;
+import sk.stuba.fei.uim.oop.maze.randomizedDepthFirst.Direction;
+
+public class DirectionDown extends Direction {
 
     private int mazeLength;
 

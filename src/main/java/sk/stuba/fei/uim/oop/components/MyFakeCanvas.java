@@ -1,5 +1,8 @@
 package sk.stuba.fei.uim.oop.components;
 
+import sk.stuba.fei.uim.oop.listners.listenersHandlers.HorizontalMove;
+import sk.stuba.fei.uim.oop.listners.listenersHandlers.Move;
+import sk.stuba.fei.uim.oop.listners.listenersHandlers.VerticalMove;
 import sk.stuba.fei.uim.oop.maze.*;
 
 import javax.swing.*;
@@ -17,7 +20,6 @@ public class MyFakeCanvas extends JPanel {
     private final int mazeLength;
     private List<Move> moves;
     private Maze maze;
-    private final String
 
 
     public Player getPlayer() {
@@ -35,42 +37,27 @@ public class MyFakeCanvas extends JPanel {
         this.mazeWidth = y;
         this.maze = new Maze(x, y);
         player = new Player(1, 1, this);
+
         moves = new ArrayList<>();
-        moves.add(new VerticalMove());
-        moves.add(new HorizontalMove());
+        moves.add(new HorizontalMove(-1, player));
+        moves.add(new VerticalMove(-1, player));
+        moves.add(new HorizontalMove(1, player));
+        moves.add(new VerticalMove(1, player));
 
 
     }
 
-    public void listenerHandler(String move) {
+    public void listenerHandler(int index) {
 
         y = player.getYPosition();
         x = player.getXPosition();
 
-
-        moves.get(0).move(move,x,y);
-
-        switch (move) {
-            case "38":
-            case "↑":
-                player.canMoveVertically(x, y, -1);
-                break;
-            case "40":
-            case "↓":
-                player.canMoveVertically(x, y, 1);
-                break;
-            case "37":
-            case "←":
-                player.canMoveHorizontally(x, y, -1);
-                break;
-            case "39":
-            case "→":
-                player.canMoveHorizontally(x, y, 1);
-                break;
-            default:
-                restart(true);
-
+        try {
+            moves.get(index).move(x, y);
+        } catch (IndexOutOfBoundsException e) {
+            restart(true);
         }
+
         player.squareListClear();
         repaint();
 
@@ -87,7 +74,7 @@ public class MyFakeCanvas extends JPanel {
 
     }
 
-    void paintMaze(Graphics g){
+    void paintMaze(Graphics g) {
 
         g.translate(90, 60);
 
@@ -113,14 +100,14 @@ public class MyFakeCanvas extends JPanel {
 
     }
 
-    void paintPlayer(Graphics g){
+    void paintPlayer(Graphics g) {
 
         g.setColor(Color.ORANGE);
         g.fillOval(player.getYPosition() * 30 + 1, player.getXPosition() * 30 + 1, 28, 28);
 
     }
 
-    void paintHighlightedSquares(Graphics g){
+    void paintHighlightedSquares(Graphics g) {
 
         for (int i = 0; i < player.highlightedSquaresSize(); i += 2) {
             int listX = player.getHighlightedSquares(i);
@@ -131,7 +118,7 @@ public class MyFakeCanvas extends JPanel {
 
     }
 
-    void paintHighlightedCircle(Graphics g){
+    void paintHighlightedCircle(Graphics g) {
 
         if (player.highlightedCircleSize() > 0) {
             g.setColor(Color.GREEN);
@@ -142,15 +129,19 @@ public class MyFakeCanvas extends JPanel {
     }
 
     public void won() {
+
         frame.getPanel().won(false);
         restart(false);
+
     }
 
     public void restart(boolean resetLabel) {
+
         if (resetLabel) frame.getPanel().won(true);
         player.setPosition(1, 1);
         maze.mazeCreation(1, 1);
         repaint();
+
     }
 
 }

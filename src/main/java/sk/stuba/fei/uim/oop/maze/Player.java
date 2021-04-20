@@ -81,7 +81,7 @@ public class Player {
     }
 
     void possibleRightRoads(int x, int y) {
-        if (canvas.getMaze().getSquare(x, y + 1) != 9){
+        if (canvas.getMaze().getSquare(x, y + 1) != 9) {
             highlightedSquaresAdd(x);
             highlightedSquaresAdd(y + 1);
             possibleRightRoads(x, y + 1);

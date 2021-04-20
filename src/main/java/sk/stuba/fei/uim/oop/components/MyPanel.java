@@ -20,12 +20,12 @@ public class MyPanel extends JPanel {
         super(gridLayout);
         setPreferredSize(new Dimension(650, 100));
         setBackground(Color.LIGHT_GRAY);
-        restart = new MyButton("Restart", keyboardListener);
-        up = new MyButton("↑", keyboardListener);
+        restart = new MyButton("Restart", "4", keyboardListener);
+        up = new MyButton("↑", "1", keyboardListener);
         label1 = new JLabel("   pocet vyhier    " + numberOfWins);
-        left = new MyButton("←", keyboardListener);
-        down = new MyButton("↓", keyboardListener);
-        right = new MyButton("→", keyboardListener);
+        left = new MyButton("←", "0", keyboardListener);
+        down = new MyButton("↓", "3", keyboardListener);
+        right = new MyButton("→", "2", keyboardListener);
         add(restart);
         add(up);
         add(label1);

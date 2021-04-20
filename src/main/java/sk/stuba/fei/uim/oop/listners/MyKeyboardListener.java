@@ -16,7 +16,7 @@ public class MyKeyboardListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        canvas.listenerHandler(e.getActionCommand());
+        canvas.listenerHandler(Integer.parseInt(e.getActionCommand()));
 
     }
 

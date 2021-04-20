@@ -1,4 +1,6 @@
-package sk.stuba.fei.uim.oop.maze;
+package sk.stuba.fei.uim.oop.maze.randomizedDepthFirst;
+
+import sk.stuba.fei.uim.oop.maze.Maze;
 
 public abstract class Direction {
 
