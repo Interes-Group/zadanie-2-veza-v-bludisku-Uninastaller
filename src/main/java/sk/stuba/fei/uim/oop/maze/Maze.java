@@ -1,6 +1,9 @@
 package sk.stuba.fei.uim.oop.maze;
 
+import sk.stuba.fei.uim.oop.components.MyFakeCanvas;
 import sk.stuba.fei.uim.oop.maze.randomizedDepthFirst.*;
+import sk.stuba.fei.uim.oop.maze.tile.Finish;
+import sk.stuba.fei.uim.oop.maze.tile.Tile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,26 +11,31 @@ import java.util.List;
 
 public class Maze {
 
-    private int[][] maze;
-    private int[][] baseMaze;
+    private Tile[][] maze;
+    private MyFakeCanvas canvas;
     private int actX;
     private int actY;
     private int mazeWidth;
     private int mazeLength;
     private List<Direction> directions;
+    private Finish finish;
 
 
-    public Maze(int length, int width) {
+    public Maze(int length, int width, MyFakeCanvas canvas) {
 
+        this.canvas = canvas;
         mazeWidth = width;
         mazeLength = length;
-        baseMaze = new int[length][width];
+        finish = new Finish(canvas);
+        maze = new Tile[length][width];
+
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < width; j++) {
-                baseMaze[i][j] = 9;
+
+                maze[i][j] = new Tile(true);
+
             }
         }
-        maze = new int[length][width];
 
         directions = new ArrayList<>();
         directions.add(new DirectionUp(this));
@@ -35,15 +43,19 @@ public class Maze {
         directions.add(new DirectionDown(this, mazeLength));
         directions.add(new DirectionLeft(this));
 
-        mazeCreation(1, 1);
+        mazeCreation(1, 1, false);
 
     }
 
-    public void newMaze() {
+    public void newMaze(boolean reset) {
 
-        for (int i = 0; i < maze.length; i++) {
-            maze[i] = baseMaze[i].clone();
+        for (int i = 0; i < mazeLength; i++) {
+            for (int j = 0; j < mazeWidth; j++) {
+                maze[i][j].setWall(true);
+            }
         }
+        if (reset)
+            maze[finish.getX()][finish.getY()] = new Tile(true);
 
     }
 
@@ -57,15 +69,15 @@ public class Maze {
         return directions.toArray(new Integer[4]);
     }
 
-    public int getSquare(int x, int y) {
+    public Tile getSquare(int x, int y) {
         return maze[x][y];
     }
 
-    public void mazeCreation(int x, int y) {
+    public void mazeCreation(int x, int y, boolean reset) {
 
         actX = x;
         actY = y;
-        newMaze();
+        newMaze(reset);
         depthFirst(actX, actY);
         setFinish();
 
@@ -86,29 +98,31 @@ public class Maze {
 
         for (int i = 0; i < mazeLength; i++) {
             for (int j = 0; j < mazeWidth; j++) {
-                if ((maze[i][j] == 0) && (searchForWalls(i, j) == 3)) {
+                if (!(maze[i][j].isWall()) && (searchForWalls(i, j) == 3)) {
 
                     actX = i;
                     actY = j;
                 }
             }
         }
-        maze[actX][actY] = 2;
+        maze[actX][actY] = finish;
+        finish.setCoordinates(actX, actY);
+
     }
 
     int searchForWalls(int i, int j) {
 
         int counter = 0;
 
-        if (maze[i + 1][j] == 9) counter++;
-        if (maze[i - 1][j] == 9) counter++;
-        if (maze[i][j + 1] == 9) counter++;
-        if (maze[i][j - 1] == 9) counter++;
+        if (maze[i + 1][j].isWall()) counter++;
+        if (maze[i - 1][j].isWall()) counter++;
+        if (maze[i][j + 1].isWall()) counter++;
+        if (maze[i][j - 1].isWall()) counter++;
 
         return counter;
     }
 
-    public void setSquare(int x, int y, int z) {
-        this.maze[x][y] = z;
+    public void setSquare(int x, int y, boolean wall) {
+        this.maze[x][y].setWall(wall);
     }
 }

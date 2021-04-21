@@ -35,7 +35,7 @@ public class MyFakeCanvas extends JPanel {
         this.frame = frame;
         this.mazeLength = x;
         this.mazeWidth = y;
-        this.maze = new Maze(x, y);
+        this.maze = new Maze(x, y, this);
         player = new Player(1, 1, this);
 
         moves = new ArrayList<>();
@@ -80,21 +80,13 @@ public class MyFakeCanvas extends JPanel {
 
         for (int row = 0; row < mazeLength; row++) {
             for (int col = 0; col < mazeWidth; col++) {
-                Color c;
-                switch (maze.getSquare(row, col)) {
-                    case 9:
-                        c = Color.BLACK;
-                        break;
-                    case 2:
-                        c = Color.CYAN;
-                        break;
-                    default:
-                        c = Color.WHITE;
-                }
+
+                Color c = maze.getSquare(row, col).setColor();
                 g.setColor(c);
                 g.fillRect(30 * col, 30 * row, 30, 30);
                 g.setColor(Color.BLACK);
                 g.drawRect(30 * col, 30 * row, 30, 30);
+
             }
         }
 
@@ -139,7 +131,7 @@ public class MyFakeCanvas extends JPanel {
 
         if (resetLabel) frame.getPanel().won(true);
         player.setPosition(1, 1);
-        maze.mazeCreation(1, 1);
+        maze.mazeCreation(1, 1, true);
         repaint();
 
     }

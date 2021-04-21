@@ -38,27 +38,27 @@ public class Player {
     }
 
     public void setPosition(int xPosition, int yPosition) {
+
         this.xPosition = xPosition;
         this.yPosition = yPosition;
+        canvas.getMaze().getSquare(this.xPosition, this.yPosition).action();
+
     }
 
     public void canMoveVertically(int x, int y, int index) {
 
-        if (canvas.getMaze().getSquare(x + index, y) == 0) {
+        if (!(canvas.getMaze().getSquare(x + index, y).isWall())) {
             moveVertically(index);
-        } else if (canvas.getMaze().getSquare(x + index, y) == 2) {
-            moveVertically(index);
-            canvas.won();
+            canvas.getMaze().getSquare(x + index, y).action();
         }
+
     }
 
     public void canMoveHorizontally(int x, int y, int index) {
 
-        if (canvas.getMaze().getSquare(x, y + index) == 0) {
+        if (!(canvas.getMaze().getSquare(x, y + index).isWall())) {
             moveHorizontally(index);
-        } else if (canvas.getMaze().getSquare(x, y + index) == 2) {
-            moveHorizontally(index);
-            canvas.won();
+            canvas.getMaze().getSquare(x, y + index).action();
         }
 
     }
@@ -73,7 +73,7 @@ public class Player {
     }
 
     void possibleLeftRoads(int x, int y) {
-        if (canvas.getMaze().getSquare(x, y - 1) != 9) {
+        if (!(canvas.getMaze().getSquare(x, y - 1).isWall())) {
             highlightedSquaresAdd(x);
             highlightedSquaresAdd(y - 1);
             possibleLeftRoads(x, y - 1);
@@ -81,7 +81,7 @@ public class Player {
     }
 
     void possibleRightRoads(int x, int y) {
-        if (canvas.getMaze().getSquare(x, y + 1) != 9) {
+        if (!(canvas.getMaze().getSquare(x, y + 1).isWall())) {
             highlightedSquaresAdd(x);
             highlightedSquaresAdd(y + 1);
             possibleRightRoads(x, y + 1);
@@ -89,7 +89,7 @@ public class Player {
     }
 
     void possibleUpRoads(int x, int y) {
-        if (canvas.getMaze().getSquare(x - 1, y) != 9) {
+        if (!(canvas.getMaze().getSquare(x - 1, y)).isWall()) {
             highlightedSquaresAdd(x - 1);
             highlightedSquaresAdd(y);
             possibleUpRoads(x - 1, y);
@@ -97,7 +97,7 @@ public class Player {
     }
 
     void possibleDownRoads(int x, int y) {
-        if (canvas.getMaze().getSquare(x + 1, y) != 9) {
+        if (!(canvas.getMaze().getSquare(x + 1, y).isWall())) {
             highlightedSquaresAdd(x + 1);
             highlightedSquaresAdd(y);
             possibleDownRoads(x + 1, y);
@@ -124,9 +124,7 @@ public class Player {
     public void possibleMove(int x, int y) {
 
         if (findPossibleMoves(x, y)) {
-            canvas.getPlayer().setPosition(this.x, this.y);
-            if (canvas.getMaze().getSquare(canvas.getPlayer().getXPosition(), canvas.getPlayer().getYPosition()) == 2)
-                canvas.won();
+            setPosition(this.x, this.y);
         }
         squareListClear();
         canvas.repaint();
