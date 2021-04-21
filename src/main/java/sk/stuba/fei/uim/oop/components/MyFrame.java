@@ -1,6 +1,6 @@
 package sk.stuba.fei.uim.oop.components;
 
-import sk.stuba.fei.uim.oop.listners.MyKeyboardListener;
+import sk.stuba.fei.uim.oop.listners.MyButtonListener;
 import sk.stuba.fei.uim.oop.listners.MyMouseLogger;
 
 import javax.swing.*;
@@ -28,7 +28,7 @@ public class MyFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.add(canvas);
 
-        panel = new MyPanel(new GridLayout(2, 3), new MyKeyboardListener(canvas));
+        panel = new MyPanel(new GridLayout(2, 3), new MyButtonListener(canvas));
         this.add(BorderLayout.PAGE_START, panel);
         this.setVisible(true);
 

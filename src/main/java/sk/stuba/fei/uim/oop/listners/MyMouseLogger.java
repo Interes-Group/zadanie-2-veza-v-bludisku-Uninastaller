@@ -62,9 +62,8 @@ public class MyMouseLogger extends MouseAdapter {
         y = y - variable - 60;
         y /= 30;
 
-        variable = x;
         this.x = y;
-        this.y = variable;
+        this.y = x;
 
     }
 

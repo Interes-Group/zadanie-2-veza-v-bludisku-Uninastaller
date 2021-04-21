@@ -5,7 +5,7 @@ import sk.stuba.fei.uim.oop.maze.Player;
 public abstract class Move {
 
     protected final int INDEX;
-    Player player;
+    protected Player player;
 
     protected Move(int index, Player player) {
 

@@ -5,11 +5,11 @@ import sk.stuba.fei.uim.oop.components.MyFakeCanvas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MyKeyboardListener implements ActionListener {
+public class MyButtonListener implements ActionListener {
 
     private MyFakeCanvas canvas;
 
-    public MyKeyboardListener(MyFakeCanvas canvas) {
+    public MyButtonListener(MyFakeCanvas canvas) {
         this.canvas = canvas;
     }
 

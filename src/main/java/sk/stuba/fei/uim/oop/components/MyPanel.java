@@ -1,6 +1,6 @@
 package sk.stuba.fei.uim.oop.components;
 
-import sk.stuba.fei.uim.oop.listners.MyKeyboardListener;
+import sk.stuba.fei.uim.oop.listners.MyButtonListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ public class MyPanel extends JPanel {
     private JButton restart;
     private int numberOfWins;
 
-    public MyPanel(GridLayout gridLayout, MyKeyboardListener keyboardListener) {
+    public MyPanel(GridLayout gridLayout, MyButtonListener keyboardListener) {
 
         super(gridLayout);
         setPreferredSize(new Dimension(650, 100));
