@@ -1,18 +1,17 @@
 package sk.stuba.fei.uim.oop.components;
 
 import sk.stuba.fei.uim.oop.listners.MyButtonListener;
+import sk.stuba.fei.uim.oop.listners.MyKeyboardListener;
 import sk.stuba.fei.uim.oop.listners.MyMouseLogger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class MyFrame extends JFrame {
 
     private MyFakeCanvas canvas;
     private MyPanel panel;
     private MyMouseLogger myMouseLogger;
-    private final int VK_LEFT = 37;
 
     public MyPanel getPanel() {
         return panel;
@@ -35,16 +34,11 @@ public class MyFrame extends JFrame {
         myMouseLogger = new MyMouseLogger(canvas);
         canvas.addMouseListener(myMouseLogger);
         canvas.addMouseMotionListener(myMouseLogger);
+        addKeyListener(new MyKeyboardListener(canvas));
 
     }
 
-    @Override
-    protected void processKeyEvent(KeyEvent e) {
 
-        if (e.getID() == KeyEvent.KEY_PRESSED)
-            canvas.listenerHandler(e.getKeyCode() - VK_LEFT);
-
-    }
 
 }
 
