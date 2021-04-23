@@ -38,7 +38,8 @@ public class MyFrame extends JFrame {
 
     }
 
-
-
+    public MyMouseLogger getMyMouseLogger() {
+        return myMouseLogger;
+    }
 }
 

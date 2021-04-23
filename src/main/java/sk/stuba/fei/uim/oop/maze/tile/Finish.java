@@ -19,9 +19,11 @@ public class Finish extends Tile {
     }
 
     public void setCoordinates(int x, int y) {
+
         this.x = x;
         this.y = y;
         setWall(false);
+
     }
 
 

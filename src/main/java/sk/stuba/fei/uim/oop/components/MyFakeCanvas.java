@@ -32,6 +32,7 @@ public class MyFakeCanvas extends JPanel {
 
     public MyFakeCanvas(MyFrame frame, int x, int y) {
 
+        setBackground(Color.GRAY);
         this.frame = frame;
         this.mazeLength = x;
         this.mazeWidth = y;
@@ -59,6 +60,7 @@ public class MyFakeCanvas extends JPanel {
         }
 
         player.squareListClear();
+        frame.getMyMouseLogger().setMouseMove(false);
         repaint();
 
     }
@@ -101,11 +103,16 @@ public class MyFakeCanvas extends JPanel {
 
     void paintHighlightedSquares(Graphics g) {
 
+        int listX;
+        int listY;
+
         for (int i = 0; i < player.highlightedSquaresSize(); i += 2) {
-            int listX = player.getHighlightedSquares(i);
-            int listY = player.getHighlightedSquares(i + 1);
+
+            listX = player.getHighlightedSquares(i);
+            listY = player.getHighlightedSquares(i + 1);
             g.setColor(Color.RED);
             g.drawRect(listY * 30, listX * 30, 30, 30);
+
         }
 
     }

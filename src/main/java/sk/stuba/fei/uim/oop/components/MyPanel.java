@@ -15,17 +15,17 @@ public class MyPanel extends JPanel {
     private JButton restart;
     private int numberOfWins;
 
-    public MyPanel(GridLayout gridLayout, MyButtonListener keyboardListener) {
+    public MyPanel(GridLayout gridLayout, MyButtonListener myButtonListener) {
 
         super(gridLayout);
         setPreferredSize(new Dimension(650, 100));
         setBackground(Color.LIGHT_GRAY);
-        restart = new MyButton("Restart", "4", keyboardListener);
-        up = new MyButton("↑", "1", keyboardListener);
+        restart = new MyButton("Restart", "4", myButtonListener);
+        up = new MyButton("↑", "1", myButtonListener);
         label1 = new JLabel("   pocet vyhier    " + numberOfWins);
-        left = new MyButton("←", "0", keyboardListener);
-        down = new MyButton("↓", "3", keyboardListener);
-        right = new MyButton("→", "2", keyboardListener);
+        left = new MyButton("←", "0", myButtonListener);
+        down = new MyButton("↓", "3", myButtonListener);
+        right = new MyButton("→", "2", myButtonListener);
         add(restart);
         add(up);
         add(label1);

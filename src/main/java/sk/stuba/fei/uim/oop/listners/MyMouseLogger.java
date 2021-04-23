@@ -1,7 +1,6 @@
 package sk.stuba.fei.uim.oop.listners;
 
 import sk.stuba.fei.uim.oop.components.MyFakeCanvas;
-import sk.stuba.fei.uim.oop.components.MyFrame;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -65,6 +64,10 @@ public class MyMouseLogger extends MouseAdapter {
         this.x = y;
         this.y = x;
 
+    }
+
+    public void setMouseMove(boolean mouseMove) {
+        this.mouseMove = mouseMove;
     }
 
 }

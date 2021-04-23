@@ -61,12 +61,14 @@ public class Maze {
 
 
     public Integer[] generateRandomDirections() {
+
         ArrayList<Integer> directions = new ArrayList<Integer>();
         for (int i = 0; i < 4; i++)
             directions.add(i);
         Collections.shuffle(directions);
 
         return directions.toArray(new Integer[4]);
+
     }
 
     public Tile getSquare(int x, int y) {
@@ -92,6 +94,7 @@ public class Maze {
             this.directions.get(direction).move(actX, actY);
 
         }
+
     }
 
     void setFinish() {

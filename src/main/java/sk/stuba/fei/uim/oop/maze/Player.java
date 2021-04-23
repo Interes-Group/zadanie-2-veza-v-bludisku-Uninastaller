@@ -16,9 +16,11 @@ public class Player {
     private List<Integer> highlightedCircle = new ArrayList<Integer>();
 
     public Player(int xPosition, int yPosition, MyFakeCanvas canvas) {
+
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.canvas = canvas;
+
     }
 
     public int getXPosition() {
@@ -30,11 +32,15 @@ public class Player {
     }
 
     public void moveHorizontally(int index) {
+
         yPosition += index;
+
     }
 
     public void moveVertically(int index) {
+
         xPosition += index;
+
     }
 
     public void setPosition(int xPosition, int yPosition) {
@@ -73,35 +79,43 @@ public class Player {
     }
 
     void possibleLeftRoads(int x, int y) {
+
         if (!(canvas.getMaze().getSquare(x, y - 1).isWall())) {
             highlightedSquaresAdd(x);
             highlightedSquaresAdd(y - 1);
             possibleLeftRoads(x, y - 1);
         }
+
     }
 
     void possibleRightRoads(int x, int y) {
+
         if (!(canvas.getMaze().getSquare(x, y + 1).isWall())) {
             highlightedSquaresAdd(x);
             highlightedSquaresAdd(y + 1);
             possibleRightRoads(x, y + 1);
         }
+
     }
 
     void possibleUpRoads(int x, int y) {
+
         if (!(canvas.getMaze().getSquare(x - 1, y)).isWall()) {
             highlightedSquaresAdd(x - 1);
             highlightedSquaresAdd(y);
             possibleUpRoads(x - 1, y);
         }
+
     }
 
     void possibleDownRoads(int x, int y) {
+
         if (!(canvas.getMaze().getSquare(x + 1, y).isWall())) {
             highlightedSquaresAdd(x + 1);
             highlightedSquaresAdd(y);
             possibleDownRoads(x + 1, y);
         }
+
     }
 
     public boolean findPossibleMoves(int x, int y) {

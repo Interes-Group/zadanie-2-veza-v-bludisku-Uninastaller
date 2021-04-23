@@ -21,7 +21,7 @@ public class Tile {
     public Color setColor() {
 
         if (wall) return Color.BLACK;
-        else return Color.WHITE;
+        else return Color.LIGHT_GRAY;
 
     }
 
