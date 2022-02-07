@@ -34,7 +34,7 @@ public class MyFrame extends JFrame {
         myMouseLogger = new MyMouseLogger(canvas);
         canvas.addMouseListener(myMouseLogger);
         canvas.addMouseMotionListener(myMouseLogger);
-        addKeyListener(new MyKeyboardListener(canvas));
+        this.addKeyListener(new MyKeyboardListener(canvas));
 
     }
 
